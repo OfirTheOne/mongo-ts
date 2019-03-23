@@ -1,0 +1,15 @@
+{
+    "MongoDB" : {
+        "Configurations" : {
+            "host" : "localhost",
+            "user" : "",
+            "password" : "",
+            "port" : "27017",
+            "database" : "DB_Name"
+        },
+        "currentVersion" : 1
+    },
+    "JWT_SECRET": "k1e2tigohx8etqhrt78htx3236o"
+
+
+}
