@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
-import { ExtendableMongooseDoc } from '../../../../lib/typed-mongoose/' 
-import { Method, Property, TypedSchema, ArrayRef, Static, toModel } from '../../../../lib/typed-mongoose/core'
+import { ExtendableMongooseDoc } from '../../../../lib/mongo-ts/' 
+import { Method, Property, TypedSchema, ArrayRef, Static, toModel, Prop } from '../../../../lib/mongo-ts/core'
 import { IChef } from './i-chef';
 
 
@@ -10,7 +10,7 @@ class ChefSchema extends ExtendableMongooseDoc implements IChef {
     static SomeString = 'helooooooo';
     constructor() { super(); }
 
-    @Property({ def: {type: String,   required: true } } )
+    @Prop() // @Property({ def: {type: String,   required: true } } )
     name: string; 
     @Property( {def: { type: String,   required: true } })
     about: string;

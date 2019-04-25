@@ -1,9 +1,9 @@
 import { Schema } from 'mongoose';
-import { ExtendableMongooseDoc } from '../../../../lib/typed-mongoose/' 
+import { ExtendableMongooseDoc } from '../../../../lib/mongo-ts/' 
 import { 
     Method, Property, TypedSchema, Static, ArrayRef,
     toModel, toSchema, OnConstructDefinitions 
-} from '../../../../lib/typed-mongoose/core'
+} from '../../../../lib/mongo-ts/core'
 import { IRestaurant } from './i-restaurant';
 
 
