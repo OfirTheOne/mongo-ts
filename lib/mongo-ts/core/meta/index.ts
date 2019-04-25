@@ -17,8 +17,9 @@ export { String } from './property/primitive/string';
 export { Number } from './property/primitive/number';
 export { Boolean } from './property/primitive/boolean';
 
-// custom property definition
+// custom property definition or reflection inferred type
 export { Property } from './property';
+export { Prop } from './property'; 
 
 // instance class method
 export { Method } from './method';
