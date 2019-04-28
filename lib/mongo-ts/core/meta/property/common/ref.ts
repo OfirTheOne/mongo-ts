@@ -1,13 +1,11 @@
 import { Schema } from 'mongoose';
-// import { MetadataAgent } from '../../../../helpers'
-import { Property } from '../property';
+import { DefineProperty } from '../property';
 
 export function Ref(modelRefName: string) {
-    return Property({ def : refDef(modelRefName)});
+    return DefineProperty(Schema.Types.ObjectId, refDef(modelRefName));
 }
 
 const refDef = (modelRefName: string) => ({
-        type: Schema.Types.ObjectId,
         ref: modelRefName
 })
 

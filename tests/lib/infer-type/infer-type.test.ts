@@ -1,4 +1,4 @@
-import { InferType } from '../../lib/mongo-ts/core/infer-type';
+import { InferType } from '../../../lib/mongo-ts/core/infer-type';
 import { expect } from 'chai';
 import { Schema } from 'mongoose';
 

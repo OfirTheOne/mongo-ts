@@ -2,7 +2,7 @@
 
 import { Schema, model } from 'mongoose';
 import { BoundTo, StrongSchema, createStrongSchema } from './../../../ts-coverage';
-import { IOrder } from './i-order';
+// import { IOrder } from './i-order';
 
 
 /*

@@ -1,43 +1,24 @@
 import * as mongoose from 'mongoose';
 import { ExtendableMongooseDoc } from '../../../../lib/mongo-ts/' 
-import { Method, Property, TypedSchema, ArrayRef, Static, toModel, Prop } from '../../../../lib/mongo-ts/core'
-import { IChef } from './i-chef';
+import { TypedSchema, ArrayRef, toModel, Prop } from '../../../../lib/mongo-ts/core'
 
 
 @TypedSchema()
-class ChefSchema extends ExtendableMongooseDoc implements IChef {
+class Chef extends ExtendableMongooseDoc {
 
-    static SomeString = 'helooooooo';
-    constructor() { super(); }
-
-    @Prop() // @Property({ def: {type: String,   required: true } } )
+    @Prop({ required: true }) 
     name: string; 
-    @Property( {def: { type: String,   required: true } })
+    @Prop({ required: true })
     about: string;
     @ArrayRef('restaurants')
     restaurants: Array<mongoose.Schema.Types.ObjectId | object>;
 
-
-    @Method()
-    printId() { console.log(this._id); };
-
-    @Static()
-    static getSomeString() { 
-        // console.log(this == Chef);   // <-- output true
-        // this.SomeString              // <-- on runtime will be undefined
-        // _this.SomeString             // <-- yell compile time error (which is good)
-        const _this = Chef;             // <-- convention to reference the context of any static method
-        console.log('getSomeString');
-    };
-
-
 }
 
-const Chef = toModel<ChefSchema, typeof ChefSchema>(ChefSchema, 'chefs', (chefSchema) => {
+const ChefModel = toModel<Chef, typeof Chef>(Chef, 'chefs', (chefSchema) => {
     // <-- setting all the hooks here -->
     chefSchema.set('toJSON', { transform: function(doc, ret, option) { return ret; }});
-    
     return chefSchema;
 });
 
-export { ChefSchema, Chef, IChef }
+export { Chef, ChefModel }

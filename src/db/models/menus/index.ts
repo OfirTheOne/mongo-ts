@@ -1,2 +1,1 @@
-export { Menu, MenuSchema } from './menu.typed-schema';
-export { IMenu } from './i-menu'
+export * from './menu.typed-schema';

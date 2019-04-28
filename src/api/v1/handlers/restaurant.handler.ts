@@ -1,38 +1,38 @@
 
 import { HandlerCallback } from '../../../ts-coverage';
-import { RestaurantSchema } from './../../../db/models/restaurants'
+import { Restaurant } from './../../../db/models/restaurants'
 import { PaginationParams, RestaurantsFilterParams } from './../../../shared' 
 import { DbSandbox } from './../../../utils/db-sandbox';
 
 export class RestaurantHandler {
 
 
-    getAll(params: { page: PaginationParams }, cb: HandlerCallback<Partial<RestaurantSchema>[]>) {
+    getAll(params: { page: PaginationParams }, cb: HandlerCallback<Partial<Restaurant>[]>) {
         DbSandbox.restaurants.getAll(params.page)
             .then( docs => cb(null, docs) )
             .catch( error => cb(error, null) );
     }
 
     
-    filter(params: { page: PaginationParams, filter: RestaurantsFilterParams }, cb: HandlerCallback<Partial<RestaurantSchema>[]>) {
+    filter(params: { page: PaginationParams, filter: RestaurantsFilterParams }, cb: HandlerCallback<Partial<Restaurant>[]>) {
         DbSandbox.restaurants.filter(params.page, params.filter)
             .then( docs => cb(null, docs) )
             .catch( error => cb(error, null) );
     }
 
-    getById(params: {id: string }, cb: HandlerCallback<Partial<RestaurantSchema>>) {
+    getById(params: {id: string }, cb: HandlerCallback<Partial<Restaurant>>) {
         DbSandbox.restaurants.getById(params.id)
             .then( docs => cb(null, docs) )
             .catch( error => cb(error, null) );
     }
     
-    patchDeactivateById(params: {id: string }, cb: HandlerCallback<Partial<RestaurantSchema>>) {
+    patchDeactivateById(params: {id: string }, cb: HandlerCallback<Partial<Restaurant>>) {
         DbSandbox.restaurants.patchDeactivateById(params.id)
             .then( docs => cb(null, docs) )
             .catch( error => cb(error, null) );
     }
 
-    patchReactivateById(params: {id: string }, cb: HandlerCallback<Partial<RestaurantSchema>>) {
+    patchReactivateById(params: {id: string }, cb: HandlerCallback<Partial<Restaurant>>) {
         DbSandbox.restaurants.patchReactivateById(params.id)
             .then( docs => cb(null, docs) )
             .catch( error => cb(error, null) );

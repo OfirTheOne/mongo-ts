@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
 import { ModelDocument } from './../../../ts-coverage';
 
-export interface IUser extends ModelDocument {
+interface IUser extends ModelDocument {
 
     email: string;
     password: string;

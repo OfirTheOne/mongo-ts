@@ -1,20 +1,20 @@
 
 import { HandlerCallback } from '../../../ts-coverage';
-import { DishSchema } from './../../../db/models/dishes'
+import { Dish } from './../../../db/models/dishes'
 import { PaginationParams, DishesFilterParams } from './../../../shared' 
 import { DbSandbox } from './../../../utils/db-sandbox';
 
 export class DishHandler {
 
 
-    getAll(params: { page: PaginationParams }, cb: HandlerCallback<Partial<DishSchema>[]>) {
+    getAll(params: { page: PaginationParams }, cb: HandlerCallback<Partial<Dish>[]>) {
         DbSandbox.dishes.getAll(params.page)
             .then( docs => cb(null, docs) )
             .catch( error => cb(error, null) );
     }
 
     
-    filter(params: { page: PaginationParams, filter: DishesFilterParams }, cb: HandlerCallback<Partial<DishSchema>[]>) {
+    filter(params: { page: PaginationParams, filter: DishesFilterParams }, cb: HandlerCallback<Partial<Dish>[]>) {
         const { tags, ingredients, priceLowThen, priceGreatThen } = params.filter;
 
         const filter: DishesFilterParams = { 
@@ -28,7 +28,7 @@ export class DishHandler {
             .catch( error => cb(error, null) );
     }
 
-    getById(params: {id: string }, cb: HandlerCallback<Partial<DishSchema>>) {
+    getById(params: {id: string }, cb: HandlerCallback<Partial<Dish>>) {
         DbSandbox.dishes.getById(params.id)
             .then( docs => cb(null, docs) )
             .catch( error => cb(error, null) );

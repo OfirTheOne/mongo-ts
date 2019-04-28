@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
 import {ModelDocument } from './../../../ts-coverage';
 
-export interface IRestaurant extends ModelDocument {
+interface IRestaurant extends ModelDocument {
     name: string;
     menus: Array<Schema.Types.ObjectId | object>;
     chef: Schema.Types.ObjectId | object;

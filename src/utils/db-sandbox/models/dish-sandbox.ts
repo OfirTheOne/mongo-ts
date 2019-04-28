@@ -1,20 +1,20 @@
 
-import { Dish, DishSchema } from '../../../db/models/dishes/'
+import { Dish, DishModel } from '../../../db/models/dishes/'
 import { PaginationParams, DishesFilterParams } from '../../..//shared';
 import { Types } from 'mongoose';
 
 
 export class DishSandbox {
 
-   public static get Dish() { return Dish;}
+   public static get Dish() { return DishModel;}
 
 
-   public static async getAll(page: PaginationParams): Promise<(Partial<DishSchema>)[]> {
+   public static async getAll(page: PaginationParams): Promise<(Partial<Dish>)[]> {
       return this.findAllByConditionFields({}, page);
   }
 
   private static findAllByConditionFields(subObj: {[key: string]: any}, page: PaginationParams){
-      const query = Dish
+      const query = DishModel
          .find(subObj)
          .lean()
          .populate({ path: 'tags', select: 'name' });
@@ -27,7 +27,7 @@ export class DishSandbox {
    * @param filter filter params
    * @param lightweight indicate if the returned document need to be projected to a shallow copy (for main page)
    */
-  public static async filter(page: PaginationParams, filter: DishesFilterParams, lightweight: boolean = true): Promise<(Partial<DishSchema>)[]> {
+  public static async filter(page: PaginationParams, filter: DishesFilterParams, lightweight: boolean = true): Promise<(Partial<Dish>)[]> {
       const { tags, ingredients, priceLowThen, priceGreatThen } = filter;
       const pipes = [];
       
@@ -49,13 +49,13 @@ export class DishSandbox {
       // apply pagination params
       pipes.push({ '$skip' : page.skip }, { '$limit': page.limit });
 
-      const query = Dish.aggregate(pipes);
+      const query = DishModel.aggregate(pipes);
       return query.exec();    
   }
 
-  public static async getById(id: string): Promise<Partial<DishSchema>> {
+  public static async getById(id: string): Promise<Partial<Dish>> {
       // return 
-      const dish = await Dish.findById(id)//.lean()
+      const dish = await DishModel.findById(id)//.lean()
           .populate({ path: 'tags', select: 'name' })
           .exec();
       const de = dish.getDescription();
@@ -66,13 +66,13 @@ export class DishSandbox {
       let totalPrice: number;
       if(Array.isArray(dishes)) {
          const dishesId = dishes.map(id =>  Types.ObjectId(id))
-         const totalPriceDoc = await Dish.aggregate([
+         const totalPriceDoc = await DishModel.aggregate([
            { $match: { _id: { $in : dishesId } } },
            { $group: { _id: null, totalPrice: { $sum: '$price' } } }
          ]).exec();
          totalPrice = totalPriceDoc[0].totalPrice;
       } else {
-         const totalPriceDoc = await Dish.find({_id: dishes}, { price: 1 });
+         const totalPriceDoc = await DishModel.find({_id: dishes}, { price: 1 });
          totalPrice = totalPriceDoc[0].price;
       }
       return totalPrice;

@@ -1,16 +1,16 @@
 
-import { ExtendableMongooseDoc } from '../../../../lib/typed-mongoose/' 
-import { TypedSchema, Enum, toModel } from '../../../../lib/typed-mongoose/core'
+import { ExtendableMongooseDoc } from '../../../../lib/mongo-ts/' 
+import { TypedSchema, Enum, toModel } from '../../../../lib/mongo-ts/core'
 
-interface IDishTag { name: 'spicy' | 'vegan' | 'vegetarian' }; 
+// interface IDishTag { name: 'spicy' | 'vegan' | 'vegetarian' }; 
 
 @TypedSchema()
-class DishTagSchema extends ExtendableMongooseDoc implements IDishTag {
+class DishTag extends ExtendableMongooseDoc {
     @Enum( ['spicy', 'vegan', 'vegetarian'] ) name: 'spicy' | 'vegan' | 'vegetarian'; 
 }
 
-const DishTag = toModel<DishTagSchema>(DishTagSchema, 'dish_tags', (schema) => {
+const DishTagModel = toModel<DishTag>(DishTag, 'dish_tags', (schema) => {
     schema.set('toJSON', { transform: function(doc, ret, option) { return ret; }});
 });
 
-export { DishTagSchema, DishTag, IDishTag }
+export { DishTagModel, DishTag }

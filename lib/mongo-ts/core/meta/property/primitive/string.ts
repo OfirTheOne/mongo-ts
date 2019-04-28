@@ -1,13 +1,16 @@
 import { Property } from '../property';
 import { Schema } from 'mongoose';
+import { PropertyDefinition } from 'lib/mongo-ts/models/internal';
 
-export function String(required: boolean = true) {
-    return Property({ def : stringDef(required)});
+export function String(definition: Partial<PropertyDefinition> = {}) {
+    return Property(Schema.Types.String, stringDef(definition));
 }
 
-const stringDef = (required: boolean) => ({
-        type: Schema.Types.String,
-        required
+const stringDef = (definition: Partial<PropertyDefinition>) => ({
+    required: definition.required || false,
+    unique: definition.unique || false,
+    default: definition.default || undefined,
+    validate: definition.validate || undefined,
 })
 
 

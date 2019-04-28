@@ -1,13 +1,15 @@
 import { Property } from '../property';
 import { Schema } from 'mongoose';
+import { PropertyDefinition } from 'lib/mongo-ts/models/internal';
 
-export function Boolean(required: boolean = true) {
-    return Property({ def : booleanDef(required)});
+export function Boolean(definition: Partial<PropertyDefinition> = {}) {
+    return Property(Schema.Types.Boolean,  booleanDef(definition));
 }
 
-const booleanDef = (required: boolean) => ({
-        type: Schema.Types.Boolean,
-        required
-})
-
+const booleanDef = (definition: Partial<PropertyDefinition>) => ({
+    required: definition.required || false,
+    unique: definition.unique || false,
+    default: definition.default || undefined,
+    validate: definition.validate || undefined,
+});
 

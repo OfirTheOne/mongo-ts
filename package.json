@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:lin": "NODE_ENV=test&& mocha --require ts-node/register tests/**/*.test.ts",
-    "test:osx": "NODE_ENV=test&& mocha --require ts-node/register tests/**/*.test.ts",
+    "test:lin": "NODE_ENV=test&& mocha --require ts-node/register tests/**/**/*.test.ts",
+    "test:osx": "NODE_ENV=test&& mocha --require ts-node/register tests/**/**/*.test.ts",
     "test": "npm run test:osx",
     "build": "tsc",
     "start": "ts-node src/index.ts"

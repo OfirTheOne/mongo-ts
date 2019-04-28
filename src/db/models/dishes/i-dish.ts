@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
 import {ModelDocument } from './../../../ts-coverage';
 
-export interface IDish extends ModelDocument {
+interface IDish extends ModelDocument {
     name: string;
     description: string;
     price: number;

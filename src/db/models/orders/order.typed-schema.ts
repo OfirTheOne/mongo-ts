@@ -1,14 +1,13 @@
 import { Schema } from 'mongoose';
-import { ExtendableMongooseDoc } from '../../../../lib/typed-mongoose/' 
 import { 
-    Property, TypedSchema, Ref, Number, Default, ArrayOf,
-    toModel, toSchema, OnConstructDefinitions
-} from '../../../../lib/typed-mongoose/core'
-import { IOrder } from './i-order';
+    ExtendableMongooseDoc,
+    Property, TypedSchema, Ref, ArrayOf, Prop,
+    toModel
+} from '../../../../lib/mongo-ts/core'
 
 
 @TypedSchema()
-class OrderDetailItemSchema extends ExtendableMongooseDoc {
+class OrderDetailItem extends ExtendableMongooseDoc {
     @Ref('dishes')
         dish: Schema.Types.ObjectId | object;
     @ArrayOf('string')
@@ -16,41 +15,29 @@ class OrderDetailItemSchema extends ExtendableMongooseDoc {
     @ArrayOf('string')
         changes: string[];
 }
-const OrderDetailItem = toSchema(OrderDetailItemSchema);
 
 @TypedSchema()
-class OrderDetailsSchema extends ExtendableMongooseDoc {
+class OrderDetails extends ExtendableMongooseDoc {
     @Ref('restaurants')
         restaurant: Schema.Types.ObjectId | object;
-    @Property( { def: { type: [OrderDetailItem]} } )
-        items: Array<{ dish: Schema.Types.ObjectId | object; sides: string[]; changes: string[] }>   
+    @Property([OrderDetailItem])
+        items: Array<OrderDetailItem>   
 }
-const OrderDetails = toSchema(OrderDetailsSchema);
 
 @TypedSchema()
-class OrderSchema extends ExtendableMongooseDoc implements IOrder, OnConstructDefinitions {
-
-    onConstructDefinitions(schemaDefinitions: object): void {
-        console.log(schemaDefinitions);
-    }
-
+class Order extends ExtendableMongooseDoc {
     @Ref('users')
         user:   Schema.Types.ObjectId | object;
-    @Number(false) @Default(Date.now)
+    @Prop({default: Date.now })
         date:   number;
-    @Number()     
+    @Prop()     
         total:  number;
-    @Property( { def: { type: OrderDetails } } )
-        details: { 
-            restaurant: Schema.Types.ObjectId | object;
-            items: Array<{ dish: Schema.Types.ObjectId | object; sides: string[]; changes: string[] }>
-        }
+    @Prop()
+        details: OrderDetails
 }
 
-const Order = toModel<OrderSchema, typeof OrderSchema>(OrderSchema, 'orders', (schema) => {
+const OrderModel = toModel<Order, typeof Order>(Order, 'orders', (schema) => {
     schema.set('toJSON', { transform: function(doc, ret, option) { return ret; }});
 });
 
-const schema = toSchema(OrderSchema);
-
-export { Order, OrderSchema }
+export { OrderModel, Order }

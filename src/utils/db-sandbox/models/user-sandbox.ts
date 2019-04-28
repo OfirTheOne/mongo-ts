@@ -1,19 +1,19 @@
 
 import { ObjectID } from 'mongodb';
-import { User, UserSchema } from '../../../db/models/users'
+import { User, UserModel } from '../../../db/models/users'
 
 export class UserSandbox {
 
-    public static User =  User;  // for seeding
+    public static User =  UserModel;  // for seeding
 
     public static alwaysLean: boolean = true;
 
     public static getAll() { 
-        User.find({}).lean();
+        UserModel.find({}).lean();
     }
 
-    public static async signUp(user : Partial<UserSchema> ) {
-        const userDoc = await User.create(user);
+    public static async signUp(user : Partial<User> ) {
+        const userDoc = await UserModel.create(user);
         
         return { ...(userDoc.toObject()), password: undefined }
     }

@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
 import { ModelDocument } from './../../../ts-coverage';
 
-export interface IOrder /* extends ModelDocument*/ {
+interface IOrder /* extends ModelDocument*/ {
 
     user: Schema.Types.ObjectId | object
     date: number;

@@ -3,7 +3,7 @@ import { Schema } from 'mongoose';
 import 'reflect-metadata'
 
 
-export function InferType(targetPrototype: Object, propertyName: string) {
+export function InferType(targetPrototype: Object, propertyName: string): Function {
     const inferredTypeCtor = Reflect.getMetadata('design:type', targetPrototype, propertyName)
 
     if(inferredTypeCtor !== undefined && inferredTypeCtor !== null) {

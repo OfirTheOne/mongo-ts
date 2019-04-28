@@ -1,40 +1,36 @@
 import { Schema } from 'mongoose';
-import { ExtendableMongooseDoc } from '../../../../lib/typed-mongoose/' 
+import { ExtendableMongooseDoc } from '../../../../lib/mongo-ts/' 
 import { 
-    Property, TypedSchema, Ref, ArrayRef, String,
-    toModel, toSchema
-} from '../../../../lib/typed-mongoose/core'
-import { IMenu } from './i-menu';
+    Property, TypedSchema, Ref, ArrayRef, ArrayOf, Prop,
+    toModel
+} from '../../../../lib/mongo-ts/core'
 
 
 @TypedSchema()
-class MenuContentSchema extends ExtendableMongooseDoc {
-    @String() 
+class MenuContent extends ExtendableMongooseDoc {
+    @Prop() 
         title: string; 
     @ArrayRef('dishs') 
         dished: Array<Schema.Types.ObjectId | object>; 
-    @Property({ def: { type:  [ { price: Schema.Types.Number, name: Schema.Types.String } ]} })
+    
+    // Todo: find a solution for this case
+    @Property([ { price: Schema.Types.Number, name: Schema.Types.String } ]) 
         sides: Array<{ price: number; name: string; }>
 }
-const MenuContent = toSchema(MenuContentSchema);
 
 @TypedSchema()
-class MenuSchema extends ExtendableMongooseDoc implements IMenu {
+class Menu extends ExtendableMongooseDoc {
     
     @Ref('restaurants') 
         restaurant: object | Schema.Types.ObjectId;
 
-    @Property({ def: { type: [{ type: MenuContent }] } })
-        content: { 
-            title: string; 
-            dished: (object | Schema.Types.ObjectId)[]; 
-            sides: [{ price: number; name: string; }]; 
-        }[];
+    @ArrayOf(MenuContent)
+        content: MenuContent[];
 }
 
-const Menu = toModel<MenuSchema, typeof MenuSchema>(MenuSchema, 'menus', (schema) => {
+const MenuModel = toModel<Menu, typeof Menu>(Menu, 'menus', (schema) => {
     // <-- setting all the hooks here -->
     schema.set('toJSON', { transform: function(doc, ret, option) { return ret; }});
 });
 
-export { Menu, MenuSchema }
+export { Menu, MenuModel }

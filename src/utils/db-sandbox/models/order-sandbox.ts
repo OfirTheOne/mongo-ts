@@ -1,25 +1,25 @@
 import { ObjectID } from 'mongodb';
-import { Order, IOrder } from '../../../db/models/orders'
-import { UserSchema } from '../../..//db/models/users';
+import { Order, OrderModel } from '../../../db/models/orders'
+import { User } from '../../..//db/models/users';
 
 export class OrderSandbox {
 
-    public static Order =  Order;  // for seeding
+    public static Order =  OrderModel;  // for seeding
 
     public static alwaysLean: boolean = true;
 
     public static getAll() { 
-        Order.find({}).lean();
+        OrderModel.find({}).lean();
     }
 
-    public static async createOrder(user: Partial<UserSchema>, orderDetails : IOrder['details'], totalPrice: number): Promise<IOrder> {
-        const order: Partial<IOrder> = {
+    public static async createOrder(user: Partial<User>, orderDetails : Order['details'], totalPrice: number): Promise<Order> {
+        const order: Partial<Order> = {
             user: user._id,
             total: totalPrice,
             details: orderDetails,
         }
-        const orderDoc = await Order.create(order);
-        return orderDoc.toObject() as IOrder;
+        const orderDoc = await OrderModel.create(order);
+        return orderDoc.toObject() as Order;
     }
 
     public static signIn(user : { password: string, email: string, } ) {

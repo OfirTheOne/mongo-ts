@@ -1,5 +1,7 @@
 import { Schema } from 'mongoose';
-import { Property } from '../property';
+import { DefineProperty } from '../property';
+import { isTypedSchemaClass } from '../../../../helpers';
+import { toSchema } from '../../../to-schema';
 
 type SupportedTypes = 'string' | 'number' | 'boolean' | 'any'; // any is mixin
 
@@ -7,23 +9,23 @@ type SupportedTypes = 'string' | 'number' | 'boolean' | 'any'; // any is mixin
  * @description 
  *  using the standard syntax:  
  *  { type: [{ type: <TYPE>, default: [] }] }
- *  where <TYPE> is the one of Schema.Types.(String | Number | Boolean | Mixed) 
+ *  where <TYPE> is the one of Schema.Types.(String | Number | Boolean | Mixed | TypedSchemaClass) 
  * @param type 
  */
-export function ArrayOf(type: SupportedTypes) {
-    return Property({ def : arrayOfDef(type)});
+export function ArrayOf(type: SupportedTypes | Function) {
+    return DefineProperty(
+        [{ type: toMatchTypes(type) }], 
+        arrayOfDef()
+    );
 }
 
-const arrayOfDef = (type: SupportedTypes) => ({
-    type: [{
-        type: toMatchTypes(type) 
-    }], 
+const arrayOfDef = () => ({
     default: [] 
 })
 
 
 
-const toMatchTypes = (type: SupportedTypes) => {
+const toMatchTypes = (type: SupportedTypes | Function) => {
     switch(type) {
         case 'string' :
             return Schema.Types.String;
@@ -34,6 +36,10 @@ const toMatchTypes = (type: SupportedTypes) => {
         case 'any' :
             return Schema.Types.Mixed;
         default:
-            return Schema.Types.Mixed;
+            if(isTypedSchemaClass(type)) {
+                return toSchema(type as any);
+            } else {
+                return Schema.Types.Mixed;
+            }
     }
 } 

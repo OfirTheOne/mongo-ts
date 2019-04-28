@@ -1,21 +1,19 @@
 import { Schema } from 'mongoose';
-import { ExtendableMongooseDoc } from '../../../../lib/typed-mongoose/' 
 import { 
-    Method, TypedSchema, Static, Ref, ArrayRef, String, Number, Boolean, ArrayOf, Default,
-    toModel, 
-    OnConstructDefinitions
-} from '../../../../lib/typed-mongoose/core'
-import { IDish } from './i-dish';
+    ExtendableMongooseDoc,
+    Method, TypedSchema, Prop, Ref, ArrayRef, ArrayOf,
+    toModel, OnConstructDefinitions,
+} from '../../../../lib/mongo-ts/core'
 
 
 @TypedSchema()
-class DishSchema extends ExtendableMongooseDoc implements IDish, OnConstructDefinitions  {
+class Dish extends ExtendableMongooseDoc  {
 
-    @String()                       
+    @Prop({required: true})                       
         name: string;
-    @String(false)                  
+    @Prop()                  
         description: string;
-    @Number()                       
+    @Prop()                       
         price: number;
     @ArrayOf('string')              
         ingredients: Array<string>; 
@@ -27,36 +25,18 @@ class DishSchema extends ExtendableMongooseDoc implements IDish, OnConstructDefi
         sides: Array<string>;
     @ArrayOf('string')              
         changes: Array<string>;
-    @Boolean(false) @Default(true)  
+    @Prop({ default: true })
         isActive: boolean;
-
-    constructor() { super(); }
-
-    onConstructDefinitions(schemaDefinitions: object): void {
-        console.log(schemaDefinitions);
-    }
-    
-    @Method() printId() { 
-        console.log(this._id); 
-    };
 
     @Method() getDescription() { 
         return this.ingredients.join(','); 
     };
 
-
-    @Static() static getSomeString() { 
-        // console.log(this == Dish);   // <-- output true
-        // this.SomeString              // <-- on runtime will be undefined
-        // _this.SomeString             // <-- yell compile time error (which is good)
-        const _this = Dish;             // <-- convention to reference the context of any static method
-        console.log('getSomeString');
-    };
 }
 
-const Dish = toModel<DishSchema, typeof DishSchema>(DishSchema, 'dishes', (schema) => {
+const DishModel = toModel<Dish, typeof Dish>(Dish, 'dishes', (schema) => {
     // <-- setting all the hooks here -->
     schema.set('toJSON', { transform: function(doc, ret, option) { return ret; }});
 });
 
-export { Dish, DishSchema }
+export { Dish, DishModel }

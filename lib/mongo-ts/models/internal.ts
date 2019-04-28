@@ -12,6 +12,14 @@ export type ExtractProperty<T> = ExcludeSubType<T, ((_: any)=>any)>;
 export type Ctor<T = any> = new(...args:any[]) => T;
 
 
+export interface PropertyDefinition {
+    required: boolean;
+    unique: boolean;
+    default: any;
+    validate: RegExp | ((val: any) => boolean);
+    // enum: string[];
+}
+
 class Schema {
     static type = 'Schema';
 

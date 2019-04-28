@@ -151,3 +151,9 @@ function digAndBuildPath(obj: object, splitPath: Array<string>): (object | undef
     }
     return valueParentObj;
 }
+
+export function isTypedSchemaClass(typeCtor: Function): boolean {
+    const name = typeCtor.name;
+    if(!name) { return false; }
+    return MetadataAgent.has(typeCtor, `isProcessed:${name}`);
+}
