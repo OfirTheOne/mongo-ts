@@ -2,7 +2,6 @@ import { TypedSchema, ExtendableMongooseDoc, Prop, Method, Enum, toModel, OnCons
 
 @TypedSchema()
 class Profile extends ExtendableMongooseDoc {
-
     @Prop() firstName: string;
     @Prop() lastName: string;
     @Prop() address: string;
