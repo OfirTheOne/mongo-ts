@@ -37,6 +37,6 @@
     "reflect-metadata": "^0.1.13"
   },
   "files": [
-    "dist/mongo-ts/**/*"
+    "dist/**/*"
   ]
 }
