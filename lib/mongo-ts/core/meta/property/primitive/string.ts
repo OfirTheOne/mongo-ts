@@ -1,6 +1,6 @@
 import { Property } from '../property';
 import { Schema } from 'mongoose';
-import { PropertyDefinition } from 'lib/mongo-ts/models/internal';
+import { PropertyDefinition } from '../../../../models/internal';
 
 export function String(definition: Partial<PropertyDefinition> = {}) {
     return Property(Schema.Types.String, stringDef(definition));

@@ -10,10 +10,10 @@
        "target": "es6",
        "outDir": "./dist",
        "baseUrl": "./",
-       "rootDir": "."
+      //  "rootDir": "./lib"
     },
     "include": [
-       "./src/**/*.ts"
+       "./lib/mongo-ts/**/*.ts"
     ],
     "exclude": [
        "node_modules"

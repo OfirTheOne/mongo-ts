@@ -2,7 +2,7 @@ import { Schema } from 'mongoose';
 
 import { MetadataAgent, isTypedSchemaClass } from '../../../helpers';
 import { InferType } from './../../infer-type'
-import { PropertyDefinition } from 'lib/mongo-ts/models/internal';
+import { PropertyDefinition } from '../../../models/internal';
 import { toSchema } from '../../to-schema';
 
 
