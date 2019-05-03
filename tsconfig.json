@@ -13,7 +13,7 @@
       //  "rootDir": "./lib"
     },
     "include": [
-       "./lib/mongo-ts/**/*.ts"
+       "./lib/**/*.ts"
     ],
     "exclude": [
        "node_modules"

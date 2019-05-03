@@ -1,6 +1,6 @@
 
-import { ExtendableMongooseDoc } from '../../../../lib/mongo-ts/' 
-import { TypedSchema, Enum, toModel } from '../../../../lib/mongo-ts/core'
+import { ExtendableMongooseDoc } from '../../../../lib/' 
+import { TypedSchema, Enum, toModel } from '../../../../lib/core'
 
 // interface IDishTag { name: 'spicy' | 'vegan' | 'vegetarian' }; 
 

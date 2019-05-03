@@ -1,8 +1,8 @@
 import { Schema } from 'mongoose';
 import { JWTMiddle } from 'jwt-middle';
 
-import { ExtendableMongooseDoc } from '../../../../lib/mongo-ts/'
-import { ArrayRef, TypedSchema, toModel, Prop } from '../../../../lib/mongo-ts/core'
+import { ExtendableMongooseDoc } from '../../../../lib/'
+import { ArrayRef, TypedSchema, toModel, Prop } from '../../../../lib/core'
 // import { IUser } from './i-user';
 
 

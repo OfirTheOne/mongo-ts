@@ -27,17 +27,13 @@ Using decorators located in key positions in a class (represent your mongoose sc
 
 
 ### Table Of Content :
-+ [Installation](#installation)
-+ [Short Intro](#short-tntro)
-+ [Usage](#usage)
-    + [Setup entrypoint script](#setup-entrypoint-script)
-    + [Create BenchmarkerTask ](#create-benchmarkertask )
-    + [Create BenchmarkerTasksGroup](#create-benchmarkertasksgroup)
-+ [Inside The O-Benchmarker Flow](#inside-the-o-benchmarker-flow)
-+ [API Reference](#api-reference)
-    + [Schema Class Decorator](#)
-    + [Class Members Decorators](#)
-    + [Class Method and Static Decorators](#api-reference)
-+ [Example Use Cases](#example-use-cases)
++ [Installation](#)
++ [Usage](#)
+    + 
++ API Reference
+    + [Schema Class Decorator](lib/mongo-ts/docs/class-decorator.md)
+    + [Class Members Decorators](lib/mongo-ts/docs/field-decorators.md)
+    + [Class Method and Static Decorators](lib/mongo-ts/docs/func-decorators.md)
++ [Example Use Cases](#)
 
 

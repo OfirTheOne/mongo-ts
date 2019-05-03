@@ -1,0 +1,27 @@
+
+branches:
+  only:
+  - developing
+
+os:
+  - linux
+  - osx
+
+language : node_js
+
+node_js :
+ - stable
+
+before_script:
+# db setup - https://docs.travis-ci.com/user/database-setup/#mongodb 
+  - sleep 15
+  - mongo mydb_test --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'
+
+install:
+ - npm ci
+
+script:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run test:osx          ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run test:lin        ; fi
+
+  

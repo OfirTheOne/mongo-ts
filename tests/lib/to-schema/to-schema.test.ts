@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import { ExtendableMongooseDoc } from '../../../lib/mongo-ts/' 
-import { Method, Prop, TypedSchema, Enum, toSchema, OnConstructDefinitions } from '../../../lib/mongo-ts/core'
+import { ExtendableMongooseDoc } from '../../../lib/' 
+import { Method, Prop, TypedSchema, Enum, toSchema, OnConstructDefinitions } from '../../../lib/core'
 
 const USER_CAPABILITIES = ['UPDATE', 'DELETE', 'UPDATE_DELETE'];
 
