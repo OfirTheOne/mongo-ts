@@ -12,7 +12,7 @@ class UserPersonalData extends ExtendableMongooseDoc {
     @Prop() lastName: string;
 }
 
-@TypedSchema()
+@TypedSchema({ options: { timestamps: true } })
 class User extends ExtendableMongooseDoc {
     @Prop({ required: true, unique: true}) email: string;
     @Prop() password: string;

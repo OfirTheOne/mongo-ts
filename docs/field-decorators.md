@@ -33,6 +33,7 @@ User = {
 <br>
 
 
+
 `@Ref(modelName: string)`
 
 ***Description:*** <br>
@@ -56,6 +57,8 @@ User = {
 }
 ```
 <br>
+
+
 
 `@ArrayRef(modelName: string)`
 
@@ -81,10 +84,19 @@ User = {
 ```
 <br>
 
+
+
+`@ArrayOf()`
+
+***Description:*** <br>
+Decorator that .. <br>
+
+***Example:*** <br>
 ```ts
-@ArrayOf()
 ```
 <br>
+
+
 
 `@Enum(enumKeys: Array<string>, definition?: Partial<PropertyDefinition>)`
 
@@ -92,24 +104,23 @@ User = {
 Decorator that define an Enum`type` property by a provided enum keys array. <br>
 the property value can be the enum type or an array of that enum, the `Enum` will infer and map the property type accordingly.<br>
 
-
 ***Example:*** <br>
 ```ts
 // helper, take enum type and return his keys as an array.
 const enumKeys = (eType => (Object.values(eType).filter(e => typeof e == 'string')));
 
-enum Premonition { 'delete' ,'update', 'insert' }
+enum Permission { 'delete' ,'update', 'insert' }
 
 class User ... {
-    @Enum(enumKeys(Premonition), { default: ['insert'] }); 
-        premonitions: Premonition[];
+    @Enum(enumKeys(Permission), { default: ['insert'] }); 
+        permissions: Permission[];
     ...
 }
 
 /*  Will be mapped to :  */
 User = {
-    premonitions: {
-        type: [String],
+    permissions: {
+        type: [Schema.Types.String],
         enum: ['delete' ,'update', 'insert'],
         default: ['insert']
     }
@@ -128,7 +139,7 @@ class Profile ... {
 /*  Will be mapped to :  */
 Profile = {
     gender: {
-        type: String,
+        type: Schema.Types.String,
         enum: ['female' ,'male', 'other'],
         required: true
     }
@@ -138,26 +149,55 @@ Profile = {
 <br>
 
 
+
 `@Property(type: any, definition?: Partial<PropertyDefinition>)`
+
+***Description:*** <br>
 Decorator that allows a free / custom definition of of the decorated property.<br>
-Useful in any case that not supported by an out-of-the-box decorator. 
+Useful in any case that not supported by an out-of-the-box decorator. <br>
+
+***Example:*** <br>
+```ts
+```
+<br>
 
 
 
 ### Restriction
 
-```ts
-@Default()
-```
+`@Default()`
 
-```ts
-@Required()
-```
+***Description:*** <br>
+Decorator that .. <br>
 
+***Example:*** <br>
 ```ts
-@Unique()
 ```
+<br>
 
+
+
+`@Required()`
+
+***Description:*** <br>
+Decorator that .. <br>
+
+***Example:*** <br>
+```ts
+```
+<br>
+
+
+
+`@Unique()`
+
+***Description:*** <br>
+Decorator that .. <br>
+
+***Example:*** <br>
+```ts
+```
+<br>
 
 
 ### Primitives (legacy)

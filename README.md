@@ -15,7 +15,7 @@ Using decorators located in key positions in a class (represent your mongoose sc
 
 <br>
 
-### Features :
+### Featurese :
 
 * Generate class definition to a native mongoose schema.
 * Support OOP writing style by enabling schema class extending.
@@ -27,9 +27,10 @@ Using decorators located in key positions in a class (represent your mongoose sc
 
 
 ### Table Of Content :
+* [Fallbacks](#docs/fallbacks.md)
 + [Installation](#)
 + [Usage](#)
-    + 
+    + []()
 + API Reference
     + [Schema Class Decorator](docs/class-decorator.md)
     + [Class Members Decorators](docs/field-decorators.md)
