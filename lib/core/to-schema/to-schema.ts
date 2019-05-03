@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose'
 import { MetadataAgent } from "../../helpers";
 import { ExtendableMongooseDoc } from "./../extendable-mongoose-doc";
-import { Ctor } from "../../models/internal";
+import { Ctor, TypedSchemaConfig } from "../../models/internal";
 import { TypedSchemaDecoratorMissingError, EmptyTypedSchemaClassError } from "../../errors";
 
 type SchemaFunctions<T> = { 
@@ -30,9 +30,11 @@ export function toSchema<T extends Ctor<M>, M extends ExtendableMongooseDoc>(Typ
     }
 
     // if this is the first time calling toSchema
-    const { functions, schemaDefinitions } = $metadata
+    const { functions, schemaDefinitions, schemaConfig } = $metadata
     if(!schemaDefinitions) { throw new EmptyTypedSchemaClassError(); }
     if(functions && (!functions.statics && !functions.methods)) { /* throw Error */ }
+
+    const config = schemaConfig ? schemaConfig.options : undefined;
 
     // -- hook 01
     /**  OnConstructDefinitions Stage **/
@@ -41,7 +43,7 @@ export function toSchema<T extends Ctor<M>, M extends ExtendableMongooseDoc>(Typ
     }
 
     // create the mongoose scheme object.
-    const schema = new mongoose.Schema<T>(schemaDefinitions);
+    const schema = new mongoose.Schema<T>(schemaDefinitions, config);
 
     // -- hook 02
     /**  OnSchemaCreated Stage **/
