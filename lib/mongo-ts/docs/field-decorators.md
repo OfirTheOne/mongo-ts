@@ -1,11 +1,10 @@
 
 # Class members Decorators :
 
-decorators are used to collect data regard there associated members, with that data the member's schema definition is created and mapped to relevant property on the generated schema.
+Mongo-TS uses field decorators to collect data regard the decorated class members, with that data the member's schema definition is created and mapped to relevant property on the generated schema.
 
 
 ## Api Reference :
-
 
 `@Prop(definition?: Partial<PropertyDefinition>)`
 
@@ -85,17 +84,64 @@ User = {
 ```ts
 @ArrayOf()
 ```
+<br>
 
+`@Enum(enumKeys: Array<string>, definition?: Partial<PropertyDefinition>)`
+
+***Description:*** <br>
+Decorator that define an Enum`type` property by a provided enum keys array. <br>
+the property value can be the enum type or an array of that enum, the `Enum` will infer and map the property type accordingly.<br>
+
+
+***Example:*** <br>
 ```ts
-@Enum()
+// helper, take enum type and return his keys as an array.
+const enumKeys = (eType => (Object.values(eType).filter(e => typeof e == 'string')));
+
+enum Premonition { 'delete' ,'update', 'insert' }
+
+class User ... {
+    @Enum(enumKeys(Premonition), { default: ['insert'] }); 
+        premonitions: Premonition[];
+    ...
+}
+
+/*  Will be mapped to :  */
+User = {
+    premonitions: {
+        type: [String],
+        enum: ['delete' ,'update', 'insert'],
+        default: ['insert']
+    }
+    ...
+}
+
+
+enum Gender { 'female' ,'male', 'other' }
+
+class Profile ... {
+    @Enum(enumKeys(Gender), { required: true }); 
+        gender: Gender;
+    ...
+}
+
+/*  Will be mapped to :  */
+Profile = {
+    gender: {
+        type: String,
+        enum: ['female' ,'male', 'other'],
+        required: true
+    }
+    ...
+}
 ```
+<br>
 
 
-### Custom property definition
+`@Property(type: any, definition?: Partial<PropertyDefinition>)`
+Decorator that allows a free / custom definition of of the decorated property.<br>
+Useful in any case that not supported by an out-of-the-box decorator. 
 
-```ts
-@Property(type: any, definition?: Partial<PropertyDefinition>)
-```
 
 
 ### Restriction
@@ -132,13 +178,3 @@ User = {
 
 
 
-
-
-// instance class method
-export { Method } from './method';
-
-// static class method
-export { Static } from './static';
-
-// schema class
-export { TypedSchema } from './typed-schema';

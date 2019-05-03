@@ -7,7 +7,7 @@ async function dropAll() {
         await DbSandbox.restaurants.Restaurant.remove({});
         await DbSandbox.dishes.Dish.remove({});
         await DbSandbox.menus.Menu.remove({});
-        await DbSandbox.dishTags.DishTag.remove({});
+        await DbSandbox.dishTags.DishTagModel.remove({});
 }
 
 
@@ -30,7 +30,7 @@ export async function insertSeed() {
             .then( () => console.log('seed Menu successfully.'))
             .catch((e) => console.log(e));
         
-            DbSandbox.dishTags.DishTag.insertMany(seed.dishTags)
+        DbSandbox.dishTags.DishTagModel.insertMany(seed.dishTags)
             .then( () => console.log('seed DishTag successfully.'))
             .catch((e) => console.log(e));
     })

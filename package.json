@@ -2,7 +2,12 @@
   "name": "mongo-ts",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "os": ["darwin", "linux", "win32"],
+  "keywords": ["mongo", "mongoDB", "mongoose", "typescript", "mongo-ts", "typed-schema"],
+  "types": "dist/index.d.ts",
+  "author": "Ofir G.",
+  "license": "ISC",
   "scripts": {
     "test:lin": "NODE_ENV=test&& mocha --require ts-node/register tests/**/**/*.test.ts",
     "test:osx": "NODE_ENV=test&& mocha --require ts-node/register tests/**/**/*.test.ts",
@@ -10,28 +15,28 @@
     "build": "tsc",
     "start": "ts-node src/index.ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
     "@types/body-parser": "^1.17.0",
     "@types/chai": "^4.1.7",
     "@types/config": "0.0.34",
     "@types/express": "^4.16.1",
     "@types/mocha": "^5.2.6",
-    "@types/mongoose": "^5.3.20",
-    "@types/node": "^11.9.5",
     "chai": "^4.2.0",
     "mocha": "^6.1.4",
     "ts-node": "^8.0.2",
     "typescript": "^3.3.3333"
   },
   "dependencies": {
-    "body-parser": "^1.18.3",
     "config": "^3.0.1",
-    "express": "^4.16.4",
     "jwt-middle": "file:jwt-middle-1.0.0.tgz",
+    "@types/mongoose": "^5.3.20",
     "mongoose": "^5.4.16",
+    "@types/node": "^11.9.5",
     "reflect-metadata": "^0.1.13"
-  }
+  },
+  "files": [
+    "dist/mongo-ts/**/*"
+  ]
 }
