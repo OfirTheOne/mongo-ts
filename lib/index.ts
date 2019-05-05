@@ -1,2 +1,4 @@
 export { ExtendableMongooseDoc } from './core/extendable-mongoose-doc';
-export { SlimeSchema } from './models/external'
+export * from './core';
+export * from './models/external';
+// export { SlimeSchema } from './models/external'

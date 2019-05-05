@@ -15,7 +15,7 @@ Using decorators located in key positions in a class (represent your mongoose sc
 
 <br>
 
-### Featurese :
+### Features :
 
 * Generate class definition to a native mongoose schema.
 * Support OOP writing style by enabling schema class extending.

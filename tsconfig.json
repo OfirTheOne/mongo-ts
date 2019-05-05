@@ -12,7 +12,7 @@
       "baseUrl": "./",
    },
    "include": [
-      "./lib/**/*.ts"
+      "lib/**/*.ts"
    ],
    "exclude": [
       "node_modules"

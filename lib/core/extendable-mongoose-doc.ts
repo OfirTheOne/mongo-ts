@@ -1,10 +1,12 @@
 import * as mongoose from 'mongoose';
 
+
 export class ExtendableMongooseDoc implements mongoose.Document {
+
     increment(): this {
         throw new Error("Method not implemented.");
     }    
-    model(name: string): mongoose.Model<this, {}> {
+    model<T extends mongoose.Document>(name: string): mongoose.Model<T> {
         throw new Error("Method not implemented.");
     }
     isDeleted(isDeleted: boolean): void;
@@ -104,6 +106,18 @@ export class ExtendableMongooseDoc implements mongoose.Document {
         throw new Error("Method not implemented.");
     }
 
+    updateOne(conditions: any, doc: any, callback?: (err: any, raw: any) => void): mongoose.Query<any> & any;
+    updateOne(conditions: any, doc: any, options: mongoose.ModelUpdateOptions, callback?: (err: any, raw: any) => void): mongoose.Query<any> & any;
+    updateOne(conditions: any, doc: any, options: any, callback?: (err: any, raw: any) => void): mongoose.Query<any> & any {
+        throw new Error("Method not implemented.");
+    }
+
+    // updateMany(conditions: any, doc: any, callback?: (err: any, raw: any) => void): mongoose.Query<any> & any;
+    // updateMany(conditions: any, doc: any, options: mongoose.ModelUpdateOptions, callback?: (err: any, raw: any) => void): mongoose.Query<any> & any;
+    // updateMany(conditions: any, doc: any, options: any, callback?: (err: any, raw: any) => void): mongoose.Query<any> & any {
+    //     throw new Error("Method not implemented.");
+    // }
+
     validate(callback?: (err: any) => void): Promise<void>;
     validate(optional: any, callback?: (err: any) => void): Promise<void>;
     validate(optional?: any, callback?: any): Promise<void> {
@@ -160,6 +174,9 @@ export class ExtendableMongooseDoc implements mongoose.Document {
         throw new Error("Method not implemented.");
     }
     eventNames(): (string | symbol)[] {
+        throw new Error("Method not implemented.");
+    }
+    replaceOne(replacement: any, callback?: (err: any, raw: any) => void): mongoose.Query<any> {
         throw new Error("Method not implemented.");
     }
     base: typeof mongoose;
