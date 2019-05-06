@@ -1,4 +1,4 @@
-sudo: required
+sudo: false
 os:
   - linux
   - osx
@@ -19,7 +19,8 @@ addons:
     packages:
     - g++-5
 
-env: CXX=g++-5
+env: 
+- CXX=g++-5
 
 
 before_install:
