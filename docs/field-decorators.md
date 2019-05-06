@@ -34,7 +34,7 @@ User = {
 
 
 
-`@Ref(modelName: string)`
+`@Ref(modelName: string, definition?: Partial<PropertyDefinition>)`
 
 ***Description:*** <br>
 Decorator that define a ref `type` property by a provided modal name. <br>
@@ -60,7 +60,7 @@ User = {
 
 
 
-`@ArrayRef(modelName: string)`
+`@ArrayRef(modelName: string, definition?: Partial<PropertyDefinition>)`
 
 ***Description:*** <br>
 Decorator that define an array ref `type` property by a provided modal name. <br>
@@ -68,7 +68,7 @@ Decorator that define an array ref `type` property by a provided modal name. <br
 ***Example:*** <br>
 ```ts
 class User ... {
-    @ArrayRef('post'); 
+    @ArrayRef('post', { default: [] }); 
         posts: Post[] | ObjectId[]; // assume 'Post' in a defined type / class
     ...
 }
@@ -77,7 +77,8 @@ class User ... {
 
 User = {
     posts: {
-        type: [{ ref: 'post' type: Schema.Types.ObjectId }]
+        type: [{ ref: 'post' type: Schema.Types.ObjectId }],
+        default: []
     }
     ...
 }
@@ -89,10 +90,26 @@ User = {
 `@ArrayOf()`
 
 ***Description:*** <br>
-Decorator that .. <br>
+Decorator that get one of the strings `string` | `number` | `boolean` | `any` or a constructor type function of a schema class (decorated with `@TypedSchema`), and define an array on that type.<br>
+An array type field can be inferred using reflection but currently the type of that array can't be detect.<br>
 
 ***Example:*** <br>
 ```ts
+class User ... {
+    @ArrayOf('string', { default: [] }); 
+        tokens: string[],
+    ...
+}
+
+/*  Will be mapped to :  */
+
+User = {
+    tokens: {
+        type: [Schema.Types.String],
+        default: []
+    }
+    ...
+}
 ```
 <br>
 

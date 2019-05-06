@@ -2,6 +2,7 @@ import { Schema } from 'mongoose';
 import { DefineProperty } from '../property';
 import { isTypedSchemaClass } from '../../../../helpers';
 import { toSchema } from '../../../to-schema';
+import { PropertyDefinition } from '../../../../models/internal';
 
 type SupportedTypes = 'string' | 'number' | 'boolean' | 'any'; // any is mixin
 
@@ -12,15 +13,16 @@ type SupportedTypes = 'string' | 'number' | 'boolean' | 'any'; // any is mixin
  *  where <TYPE> is the one of Schema.Types.(String | Number | Boolean | Mixed | TypedSchemaClass) 
  * @param type 
  */
-export function ArrayOf(type: SupportedTypes | Function) {
+export function ArrayOf(type: SupportedTypes | Function, definition: Partial<PropertyDefinition> = {}) {
     return DefineProperty(
-        [{ type: toMatchTypes(type) }], 
-        arrayOfDef()
-    );
+        [{ type: toMatchTypes(type) }], {
+        ...definition, 
+        ...arrayOfDef()
+    });
 }
 
 const arrayOfDef = () => ({
-    default: [] 
+    // default: [] 
 })
 
 

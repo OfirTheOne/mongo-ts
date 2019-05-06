@@ -1,15 +1,17 @@
 import { Schema } from 'mongoose';
-// import { MetadataAgent } from '../../../../helpers'
 import { DefineProperty } from '../property';
-export function ArrayRef(modelRefName: string) {
+import { PropertyDefinition } from '../../../..//models/internal';
+
+export function ArrayRef(modelRefName: string, definition: Partial<PropertyDefinition> = {}) {
     return DefineProperty(
-        [{ type: Schema.Types.ObjectId, ref: modelRefName }], 
-        arrayRefDef(modelRefName)
-    );
+        [{ type: Schema.Types.ObjectId, ref: modelRefName }],{
+            ...definition, 
+            // ...arrayRefDef()
+        });
 }
 
 const arrayRefDef = (modelRefName: string) => ({
-    default: [] 
+    // default: [] 
 })
 
 

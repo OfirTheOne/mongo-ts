@@ -86,10 +86,23 @@ Admin = {
 
 ## Schema Creation Hooks
 
+The process of generating a 'native' schema from schema-class, can be divided to stages, 
+
+* first there is a checkup, if a 'native' schema has been generated from that class, if so, its cached and the hook `onSchemaCreated` is called, else, 
+* the schema definition is being constructed from the metadata of the class and the hook `onConstructDefinitions` is called.
+
+* after the schema definitions are determent, the 'native' schema is created and the hook `onSchemaCreated` is called, 
+
+* then the 'native' schema object is bound to any static / class method, that was decorated in the schema-class, and the hook `onSchemaBound` is called.
+
+<br>
+
+
+
 `OnConstructDefinitions` 
 
 ***Description:*** <br>
-// 
+Todo description .. 
 
 ***Definition:*** <br> 
 ```ts
@@ -104,7 +117,7 @@ interface OnConstructDefinitions {
 `OnSchemaCreated` 
 
 ***Description:*** <br>
-// 
+Todo description .. 
 
 ***Definition:*** <br> 
 ```ts
@@ -116,10 +129,25 @@ interface OnSchemaCreated {
 
 
 
+`OnSchemaBound` 
+
+***Description:*** <br>
+Todo description .. 
+
+***Definition:*** <br> 
+```ts
+interface OnSchemaBound {
+    onSchemaBound(schema: Schema): void
+}
+```
+<br>
+
+
+
 `OnSchemaCached` 
 
 ***Description:*** <br>
-// 
+Todo description .. 
 
 ***Definition:*** <br> 
 ```ts

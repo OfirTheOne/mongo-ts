@@ -52,15 +52,15 @@ export function toSchema<T extends Ctor<M>, M extends ExtendableMongooseDoc>(Typ
     }
 
     // assign class method to the schema.
-    const populatedSchema = assignSchemaFunctions(schema, functions);
+    const boundSchema = assignSchemaFunctions(schema, functions);
 
-    if(typeof TypedSchemaClass.prototype['onSchemaCreated'] == 'function') {
-        TypedSchemaClass.prototype['onSchemaCreated'](schema);
+    if(typeof TypedSchemaClass.prototype['onSchemaBound'] == 'function') {
+        TypedSchemaClass.prototype['onSchemaBound'](schema);
     }
     // set the processed schema object for caching - any future calling of this function.
-    MetadataAgent.set(TypedSchemaClass, ['processedSchemaObject', populatedSchema])
+    MetadataAgent.set(TypedSchemaClass, ['processedSchemaObject', boundSchema])
 
-    return populatedSchema;
+    return boundSchema;
     
 }
 
