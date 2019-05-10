@@ -83,6 +83,9 @@ Admin = {
 ```
 <br>
 
+`TypedSchemaConfig`
+
+
 
 ## Schema Creation Hooks
 
@@ -102,7 +105,8 @@ The process of generating a 'native' schema from schema-class, can be divided to
 `OnConstructDefinitions` 
 
 ***Description:*** <br>
-Todo description .. 
+An interface the schema-class can implement and apply the hook `onConstructDefinitions`.  <br>
+`onConstructDefinitions` function executed after the schema definition has been constructed from the schema-class metadata, the schema definition object and decorated static / class methods object is provided as an argument.<br> 
 
 ***Definition:*** <br> 
 ```ts
@@ -117,7 +121,8 @@ interface OnConstructDefinitions {
 `OnSchemaCreated` 
 
 ***Description:*** <br>
-Todo description .. 
+An interface the schema-class can implement and apply the hook `onSchemaCreated`.  <br>
+`onSchemaCreated` function executed after the 'native' schema as created, the new schema object is provided as an argument.<br> 
 
 ***Definition:*** <br> 
 ```ts
@@ -132,7 +137,8 @@ interface OnSchemaCreated {
 `OnSchemaBound` 
 
 ***Description:*** <br>
-Todo description .. 
+An interface the schema-class can implement and apply the hook `onSchemaBound`.  <br>
+`onSchemaBound` function executed after static / class method, had been bound to the 'native' schema, the bound schema object is provided as an argument.<br> 
 
 ***Definition:*** <br> 
 ```ts
@@ -147,7 +153,9 @@ interface OnSchemaBound {
 `OnSchemaCached` 
 
 ***Description:*** <br>
-Todo description .. 
+An interface the schema-class can implement and apply the hook `onSchemaCached`.  <br>
+`onSchemaCached` function executed only if a 'native' schema has been created from the schema-class (and can be cached), in case the schema can be cached non of the other hooks will ran. <br> 
+The cached schema object is provided as an argument.<br> 
 
 ***Definition:*** <br> 
 ```ts

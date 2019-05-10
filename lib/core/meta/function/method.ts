@@ -1,4 +1,4 @@
-import { MetadataAgent } from '../../helpers'
+import { MetadataAgent } from '../../../helpers'
 
 export function Method() {
 

@@ -1,28 +1,16 @@
 
-import { SchemaOptions, SchemaTypeOpts } from 'mongoose';
+import { SchemaOptions } from 'mongoose';
 
-export interface PropertyDefinition extends SchemaTypeOpts<any> {
-    type: never;
-} 
+export { PropertyDefinition } from './property-definition.model'
+
+
 
 export interface TypedSchemaConfig {
     options: SchemaOptions,
     extendsMeta?: any,
 }
 
-
-type SubType<Base, Condition> = 
-    Pick<Base, { [Key in keyof Base]: Base[Key] extends Condition ? Key : never }[keyof Base]>;
-
-type ExcludeSubType<Base, NegateCondition> = 
-    Pick<Base, { [Key in keyof Base]: Base[Key] extends NegateCondition ? never : Key}[keyof Base]>;
-
-
-export type ExtractFunction<T> = SubType<T, ((_: any)=>any)>;
-
-export type ExtractProperty<T> = ExcludeSubType<T, ((_: any)=>any)>;
-
-export type Ctor<T = any> = new(...args:any[]) => T;
+export * from './utils';
 
 /*
 
@@ -34,26 +22,4 @@ export interface PropertyDefinition  {
     index: boolean;
     // enum: string[];
 }
-*/
-
-/*
-class Schema {
-    static type = 'Schema';
-
-    name: string;
-    id: number;
-
-    save() : boolean {
-        return true;
-    }
-
-    static findAll(): any[] {
-        return [];
-    }
-}
-
-type SchemaProps = ExtractProperty<Schema>
-type SchemaStaticProps = ExtractProperty<typeof Schema>
-type SchemaInstanceMethods = ExtractFunction<Schema>
-type SchemaStaticMethods = ExtractFunction<typeof Schema>
 */

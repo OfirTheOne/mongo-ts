@@ -9,7 +9,7 @@ type SchemaFunctions<T> = {
     statics?: { [key in keyof  T]: Function } 
 }
 
-export function toSchema<T extends Ctor<M>, M extends ExtendableMongooseDoc>(TypedSchemaClass: T):  mongoose.Schema<T> {
+export function toSchema<T extends Ctor<M>, M extends mongoose.Document>(TypedSchemaClass: T):  mongoose.Schema<T> {
     
     const $metadata = MetadataAgent.getMeta(TypedSchemaClass);
 

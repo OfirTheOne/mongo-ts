@@ -1,8 +1,8 @@
 import { Schema } from 'mongoose';
-import { DefineProperty } from '../property';
 import { isTypedSchemaClass } from '../../../../helpers';
 import { toSchema } from '../../../to-schema';
 import { PropertyDefinition } from '../../../../models/internal';
+import { createPropertyDecorator } from '../create-property-decorator';
 
 type SupportedTypes = 'string' | 'number' | 'boolean' | 'any'; // any is mixin
 
@@ -14,16 +14,15 @@ type SupportedTypes = 'string' | 'number' | 'boolean' | 'any'; // any is mixin
  * @param type 
  */
 export function ArrayOf(type: SupportedTypes | Function, definition: Partial<PropertyDefinition> = {}) {
-    return DefineProperty(
-        [{ type: toMatchTypes(type) }], {
-        ...definition, 
-        ...arrayOfDef()
+    
+    return createPropertyDecorator('ArrayOf' ,(targetPrototype: Object, propertyName: string) => {
+        return {
+            type: [{ type: toMatchTypes(type) }],
+            definition
+        }
     });
 }
 
-const arrayOfDef = () => ({
-    // default: [] 
-})
 
 
 

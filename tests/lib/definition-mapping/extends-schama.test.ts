@@ -42,6 +42,5 @@ class Admin extends BaseUser implements OnConstructDefinitions {
 describe('toSchema function', function() {
     it('schema definitions extend the base class schema definitions.', function() {
         const AdminSchema = toSchema<typeof Admin, Admin>(Admin);
-        // AdminSchema.
     })
 })

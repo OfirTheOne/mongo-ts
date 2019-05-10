@@ -1,31 +1,31 @@
 
 
 
-// restrictions
-export { Default } from './property/restriction/default';
-export { Required } from './property/restriction/required';
-export { Unique } from './property/restriction/unique';
+// composition
+export { Default }  from './field/composition/default';
+export { Required } from './field/composition/required';
+export { Unique }   from './field/composition/unique';
 
 // common patterns
-export { Enum } from './property/common/enum';
-export { Ref } from './property/common/ref';
-export { ArrayRef } from './property/common/array-ref';
-export { ArrayOf } from './property/common/array-of';
+export { Enum }     from './field/common/enum';
+export { Ref }      from './field/common/ref';
+export { ArrayRef } from './field/common/array-ref';
+export { ArrayOf }  from './field/common/array-of';
 
 // primitives
-export { String } from './property/primitive/string';
-export { Number } from './property/primitive/number';
-export { Boolean } from './property/primitive/boolean';
+export { String }   from './field/primitive/string';
+export { Number }   from './field/primitive/number';
+export { Boolean }  from './field/primitive/boolean';
 
 // custom property definition or reflection inferred type
-export { Property } from './property';
-export { Prop } from './property'; 
+export { Property } from './field/property';
+export { Prop }     from './field/prop'; 
 
 // instance class method
-export { Method } from './method';
+export { Method }   from './function/method';
 
 // static class method
-export { Static } from './static';
+export { Static }   from './function/static';
 
 // schema class
-export { TypedSchema } from './typed-schema';
+export { TypedSchema } from './class/typed-schema';

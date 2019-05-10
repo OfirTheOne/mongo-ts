@@ -1,8 +1,5 @@
-import { Ctor, TypedSchemaConfig } from '../../models/internal';
-import { MetadataAgent } from '../../helpers'
-
-
-
+import { Ctor, TypedSchemaConfig } from '../../../models/internal';
+import { MetadataAgent } from '../../../helpers'
 
 export function TypedSchema(config?: TypedSchemaConfig) {
 
