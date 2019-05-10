@@ -3,8 +3,19 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
-  "os": ["darwin", "linux", "win32"],
-  "keywords": ["mongo", "mongoDB", "mongoose", "typescript", "mongo-ts", "typed-schema"],
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "keywords": [
+    "mongo",
+    "mongoDB",
+    "mongoose",
+    "typescript",
+    "mongo-ts",
+    "typed-schema"
+  ],
   "types": "dist/index.d.ts",
   "author": "Ofir G.",
   "license": "ISC",
@@ -26,8 +37,7 @@
     "chai": "^4.2.0",
     "mocha": "^6.1.4",
     "ts-node": "^8.0.2",
-    "typescript": "^3.3.3333",
-    "jwt-middle": "file:jwt-middle-1.0.0.tgz"
+    "typescript": "^3.3.3333"
   },
   "dependencies": {
     "config": "^3.0.1",
