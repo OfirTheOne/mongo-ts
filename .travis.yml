@@ -18,7 +18,9 @@ before_script:
 # db setup - https://docs.travis-ci.com/user/database-setup/#mongodb 
   - sleep 15
   - sudo mkdir -p /data/db
-  - sudo mongod && mongo mydb_test --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'
+  - osascript -e 'tell app "Terminal" to do script "sudo mongod"'
+  - sleep 5
+  - mongo mydb_test --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'
 
 script:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run test:osx          ; fi
