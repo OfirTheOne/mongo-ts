@@ -13,7 +13,7 @@ export function createPropertyDecorator(callerDecorator: string, cb: (targetProt
             const mergedDefinition = { ...customDefaultDefinition, ...definition }
             MetadataAgent.assign(targetPrototype, [
                 `schemaDefinitions.${propertyName}`, 
-                { ...mergedDefinition, type }
+                type ? { ...mergedDefinition, type } : { ...mergedDefinition }
             ]);
             
         }

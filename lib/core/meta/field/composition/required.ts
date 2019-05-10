@@ -1,11 +1,17 @@
-import { Property } from '../property';
+import { createPropertyDecorator } from '../create-property-decorator';
 
-export function Required(setTo: boolean = true) {
-    return Property({ def : requiredDef(setTo)});
+
+export function Required(value: (boolean | string) = true) {
+    return createPropertyDecorator('Required', (targetPrototype: Object, propertyName: string) => {
+        return {
+            type: undefined,
+            definition: requiredDef(value)
+        }
+    })
 }
 
-const requiredDef = (setTo: boolean) => ({
-    required: setTo
-})
+const requiredDef = (value: boolean | string) => ({
+    required: value
+});
 
 

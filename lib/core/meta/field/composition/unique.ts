@@ -1,12 +1,17 @@
-import { Property } from '../property';
-// import { Schema } from 'mongoose';
+import { createPropertyDecorator } from '../create-property-decorator';
 
-export function Unique(setTo: boolean = true) {
-    return Property({ def : uniqueDef(setTo)});
+
+export function Unique(value: any = true) {
+    return createPropertyDecorator('Unique', (targetPrototype: Object, propertyName: string) => {
+        return {
+            type: undefined,
+            definition: uniqueDef(value)
+        }
+    })
 }
 
-const uniqueDef = (setTo: boolean) => ({
-        unique: setTo
-})
+const uniqueDef = (value: boolean) => ({
+        unique: value
+});
 
 
