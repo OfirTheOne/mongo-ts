@@ -27,14 +27,13 @@ Using decorators located in key positions in a class (represent your mongoose sc
 
 
 ### Table Of Content :
-* [Fallbacks](#docs/fallbacks.md)
 + [Installation](#)
 + [Usage](#)
-    + []()
+    + 
 + API Reference
-    + [Schema Class Decorator](docs/class-decorator.md)
-    + [Class Members Decorators](docs/field-decorators.md)
-    + [Class Method and Static Decorators](docs/func-decorators.md)
+    + [Schema Class Decorator](lib/mongo-ts/docs/class-decorator.md)
+    + [Class Members Decorators](lib/mongo-ts/docs/field-decorators.md)
+    + [Class Method and Static Decorators](lib/mongo-ts/docs/func-decorators.md)
 + [Example Use Cases](#)
 
 

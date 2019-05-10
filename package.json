@@ -26,17 +26,18 @@
     "chai": "^4.2.0",
     "mocha": "^6.1.4",
     "ts-node": "^8.0.2",
-    "typescript": "^3.3.3333"
+    "typescript": "^3.3.3333",
+    "jwt-middle": "file:jwt-middle-1.0.0.tgz"
   },
   "dependencies": {
     "config": "^3.0.1",
-    "jwt-middle": "file:jwt-middle-1.0.0.tgz",
     "@types/mongoose": "^5.3.20",
     "mongoose": "^5.4.16",
     "@types/node": "^11.9.5",
     "reflect-metadata": "^0.1.13"
   },
   "files": [
-    "dist/mongo-ts/**/*"
+    "dist/**",
+    "index.js"
   ]
 }

@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
-import { ExtendableMongooseDoc } from '../../../../lib/mongo-ts/' 
-import { TypedSchema, ArrayRef, toModel, Prop } from '../../../../lib/mongo-ts/core'
+import { ExtendableMongooseDoc } from '../../../../lib/' 
+import { TypedSchema, ArrayRef, toModel, Prop } from '../../../../lib/core'
 
 
 @TypedSchema()

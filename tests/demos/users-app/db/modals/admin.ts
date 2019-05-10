@@ -1,4 +1,4 @@
-import { TypedSchema, ExtendableMongooseDoc, Prop, Method, Enum, toModel, OnConstructDefinitions } from './../../../../../lib/mongo-ts/core'
+import { TypedSchema, ExtendableMongooseDoc, Prop, Method, Enum, toModel, OnConstructDefinitions } from './../../../../../lib/core'
 import { Profile } from './profile';
 
 const USER_CAPABILITIES = ['UPDATE', 'DELETE', 'UPDATE_DELETE'];

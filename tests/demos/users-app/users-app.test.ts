@@ -45,7 +45,6 @@ async function insertTwoAdminsWithSameEmail(done) {
 
     const admin02 = new AdminModel(admins[1]);
     await admin02.save();
-
 }
 
 async function drop(modelName: string) {

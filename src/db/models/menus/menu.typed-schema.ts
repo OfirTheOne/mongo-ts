@@ -1,9 +1,9 @@
 import { Schema } from 'mongoose';
-import { ExtendableMongooseDoc } from '../../../../lib/mongo-ts/' 
+import { ExtendableMongooseDoc } from '../../../../lib/' 
 import { 
     Property, TypedSchema, Ref, ArrayRef, ArrayOf, Prop,
     toModel
-} from '../../../../lib/mongo-ts/core'
+} from '../../../../lib/core'
 
 
 @TypedSchema()

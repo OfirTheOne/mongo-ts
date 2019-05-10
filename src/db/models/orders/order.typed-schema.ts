@@ -3,7 +3,7 @@ import {
     ExtendableMongooseDoc,
     Property, TypedSchema, Ref, ArrayOf, Prop,
     toModel
-} from '../../../../lib/mongo-ts/core'
+} from '../../../../lib/core'
 
 
 @TypedSchema()

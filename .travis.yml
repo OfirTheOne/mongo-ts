@@ -1,0 +1,41 @@
+sudo: false
+os:
+  - linux
+  - osx
+
+language : node_js
+
+node_js :
+ - stable
+
+branches:
+  only:
+  - developing
+
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-5
+
+env: 
+- CXX=g++-5
+
+
+before_install:
+  - npm install -g node-gyp
+
+install:
+ - npm ci
+
+before_script:
+# db setup - https://docs.travis-ci.com/user/database-setup/#mongodb 
+  - sleep 15
+  - mongo mydb_test --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'
+
+script:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run test:osx          ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run test:lin        ; fi
+
+  
