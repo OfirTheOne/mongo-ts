@@ -7,10 +7,11 @@ export function getDefinitionMap(): Readonly<Partial<DefinitionMap>> {
 }
 
 export function setDefinitionMap(defMap: Partial<DefinitionMap>) {
+    if(definitionMap) {
+        console.warn('calling setDefinitionMap second time will override the existing definition-map.')
+    }
     definitionMap = defMap;
 }
-
-
 
 export function getDefaultDefinition(fieldName: string, type: Function, decorator: string): Partial<DefinitionMap> {
     let definition: Partial<DefinitionMap> = {};
@@ -30,6 +31,5 @@ export function getDefaultDefinition(fieldName: string, type: Function, decorato
             definition = { ...definition, ...def };
         }
     }
-    return definition;
-    
+    return definition;  
 }

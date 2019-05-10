@@ -9,8 +9,12 @@ export function createPropertyDecorator(callerDecorator: string, cb: (targetProt
         if(!MetadataAgent.has(targetPrototype, `isProcessed:${name}`)) { 
             const {type, definition} = cb(targetPrototype, propertyName);
 
-            getDefaultDefinition(propertyName, type, callerDecorator)
-            MetadataAgent.assign(targetPrototype, [`schemaDefinitions.${propertyName}`, { ...definition, type}]);
+            const customDefaultDefinition = getDefaultDefinition(propertyName, type, callerDecorator);
+            const mergedDefinition = { ...customDefaultDefinition, ...definition }
+            MetadataAgent.assign(targetPrototype, [
+                `schemaDefinitions.${propertyName}`, 
+                { ...mergedDefinition, type }
+            ]);
             
         }
     }

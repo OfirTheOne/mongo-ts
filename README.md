@@ -33,6 +33,8 @@ Using decorators located in key positions in a class (represent your mongoose sc
     + [Schema Creation Hooks](#schema-creation-hooks)
     + [Class Members Decorators](#class-members-decorators)
     + [Class Method and Static Decorators](#class-static-and-class-method-decorators)
+    + [Custom Default Schema Definition](#custom-default-schema-definition)
+
 * [Fallbacks](#fallbacks)
 + [Example Use Cases](#)
 
@@ -149,7 +151,7 @@ An interface ...
 <br>
 <br>
 
-## **Schema Creation Hooks: **
+## **Schema Creation Hooks :**
 
 **Overview:** <br>
 The process of generating a 'native' schema from schema-class, is divided to stages :
@@ -612,6 +614,15 @@ UserModel.findById(id).lean().then((user) => {
 If `.lean()` was not chained before the `.then()` than the method `user.getEmailAccountProvider()` would have been called as expected. <br>
 
 <br>
+
+
+## **Custom Default Schema Definition :**
+
+**Overview** <br>
+... 
+
+<br>
+
 
 # Fallbacks : 
 
