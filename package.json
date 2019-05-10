@@ -1,7 +1,7 @@
 {
   "name": "mongo-ts",
   "version": "1.0.0",
-  "description": "",
+  "description": "Mongoose wrapper for Typescript supports",
   "main": "dist/index.js",
   "os": [
     "darwin",
@@ -19,6 +19,10 @@
   "types": "dist/index.d.ts",
   "author": "Ofir G.",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OfirTheOne/mongo-ts"
+  },
   "scripts": {
     "test:lin": "NODE_ENV=travis_test&& mocha --require ts-node/register tests/**/**/*.test.ts",
     "test:osx": "NODE_ENV=travis_test&& mocha --require ts-node/register tests/**/**/*.test.ts",
