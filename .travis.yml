@@ -18,7 +18,7 @@ before_script:
 # db setup - https://docs.travis-ci.com/user/database-setup/#mongodb 
   - sleep 15
   - sudo mkdir -p /data/db
-  - osascript -e 'tell app "Terminal" to do script "sudo mongod"'
+  - osascript -e 'tell app \"Terminal\" to do script \"sudo mongod\"'
   - sleep 5
   - mongo mydb_test --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'
 
