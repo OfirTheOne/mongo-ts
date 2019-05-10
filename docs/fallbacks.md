@@ -50,5 +50,4 @@ class BaseUser extends ExtendableMongooseDoc {
 }
 
 
-
 ```
