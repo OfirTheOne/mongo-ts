@@ -1,0 +1,11 @@
+{
+    "MongoDB" : {
+        "Configurations" : {
+            "host" : "127.0.0.1",
+            "user" : "travis",
+            "password" : "test",
+            "port" : "27017",
+            "database" : "mydb_test"
+        }
+    }
+}
