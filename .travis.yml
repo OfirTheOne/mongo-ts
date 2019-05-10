@@ -1,5 +1,4 @@
-sudo: false
-os:
+addos:
   - linux
   - osx
 
@@ -11,20 +10,6 @@ node_js :
 branches:
   only:
   - master
-
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - g++-5
-
-env: 
-- CXX=g++-5
-
-
-before_install:
-  - npm install -g node-gyp
 
 install:
  - npm ci
