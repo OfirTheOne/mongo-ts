@@ -1,9 +1,9 @@
 
 import { expect } from 'chai';
+import { Schema } from 'mongoose';
 import { 
     Prop, Enum, ArrayOf, TypedSchema, ExtendableMongooseDoc, toModel, OnConstructDefinitions, toSchema
 } from "../../../lib";
-import { Schema } from 'mongoose';
 
 enum GenderEnums { 'g', 'f', 'n'}
 enum PaymentEnums { 'paypal' = 1, 'visa' = 2, 'master' = 3 }

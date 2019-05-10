@@ -9,7 +9,7 @@ Using decorators located in key positions in a class (represent your mongoose sc
 <br>
 
 ### References :
-* [MongoDB]('https://docs.mongodb.com/manual/') 
+* [MongoDB](https://docs.mongodb.com/manual/) 
 * [Mongoose]('https://mongoosejs.com/docs/guide.html')
 * [Typescript]('https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html')
 
@@ -33,6 +33,8 @@ Using decorators located in key positions in a class (represent your mongoose sc
     + [Schema Creation Hooks](#schema-creation-hooks)
     + [Class Members Decorators](#class-members-decorators)
     + [Class Method and Static Decorators](#class-static-and-class-method-decorators)
+    + [Custom Default Schema Definition](#custom-default-schema-definition)
+
 * [Fallbacks](#fallbacks)
 + [Example Use Cases](#)
 
@@ -149,7 +151,7 @@ An interface ...
 <br>
 <br>
 
-## **Schema Creation Hooks: **
+## **Schema Creation Hooks :**
 
 **Overview:** <br>
 The process of generating a 'native' schema from schema-class, is divided to stages :
@@ -439,12 +441,14 @@ User = {
 
 ### Compositions
 
-Decorator be nature can be compose on top of each other.<br>
+Decorators by nature can be compose on top of each other, with decorator that set a specific definition attribute it can make more sense to utilize that behaviors.<br> 
+An option for setting a class member's definition can be by composing specific-attribute decorators.<br>
+<br>
 
-### `@Default()`
+### `@Default(value: boolean = true)`
 
 ***Description:*** <br>
-Decorator that set the default definition to it's provided value. <br>
+Decorator that set the `default` definition attribute to the provided value. <br>
 
 ***Example:*** <br>
 ```ts
@@ -453,10 +457,10 @@ Decorator that set the default definition to it's provided value. <br>
 
 
 
-### `@Required()`
+### `@Required(value: (boolean | string) = true)`
 
 ***Description:*** <br>
-Decorator that set the required definition to it's provided value. <br>
+Decorator that set the `required` definition attribute to the provided value. <br>
 
 ***Example:*** <br>
 ```ts
@@ -465,10 +469,10 @@ Decorator that set the required definition to it's provided value. <br>
 
 
 
-### `@Unique()`
+### `@Unique(value: boolean = true)`
 
 ***Description:*** <br>
-Decorator that set the unique definition to it's provided value. <br>
+Decorator that set the `unique` definition attribute to the provided value. <br>
 
 ***Example:*** <br>
 ```ts
@@ -476,23 +480,18 @@ Decorator that set the unique definition to it's provided value. <br>
 <br>
 
 
-### Primitives (legacy)
+### `@Match(value: RegExp | string)`
 
+***Description:*** <br>
+Decorator that set the `match` definition attribute to the provided value. <br>
+
+***Example:*** <br>
 ```ts
-@String() 
 ```
 
-```ts
-@Number()
-```
-
-```ts
-@Boolean()
-```
-
-
-
-
+<br>
+<br>
+<br>
 
 
 
@@ -612,6 +611,19 @@ UserModel.findById(id).lean().then((user) => {
 If `.lean()` was not chained before the `.then()` than the method `user.getEmailAccountProvider()` would have been called as expected. <br>
 
 <br>
+<br>
+<br>
+
+
+## **Custom Default Schema Definition :**
+
+**Overview** <br>
+... 
+
+<br>
+<br>
+<br>
+
 
 # Fallbacks : 
 
