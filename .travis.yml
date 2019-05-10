@@ -17,6 +17,7 @@ install:
 before_script:
 # db setup - https://docs.travis-ci.com/user/database-setup/#mongodb 
   - sleep 15
+  - sudo mkdir -p /data/db
   - sudo mongod
   - mongo mydb_test --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'
 
