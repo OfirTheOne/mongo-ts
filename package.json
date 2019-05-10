@@ -3,8 +3,19 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
-  "os": ["darwin", "linux", "win32"],
-  "keywords": ["mongo", "mongoDB", "mongoose", "typescript", "mongo-ts", "typed-schema"],
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "keywords": [
+    "mongo",
+    "mongoDB",
+    "mongoose",
+    "typescript",
+    "mongo-ts",
+    "typed-schema"
+  ],
   "types": "dist/index.d.ts",
   "author": "Ofir G.",
   "license": "ISC",
