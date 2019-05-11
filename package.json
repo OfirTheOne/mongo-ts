@@ -1,5 +1,5 @@
 {
-  "name": "ts-mongo",
+  "name": "mongo-ts-struct",
   "version": "1.0.0",
   "description": "Mongoose wrapper for Typescript supports",
   "main": "dist/index.js",
