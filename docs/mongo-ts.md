@@ -9,7 +9,7 @@ Using decorators located in key positions in a class (represent your mongoose sc
 <br>
 
 ### References :
-* [MongoDB]('https://docs.mongodb.com/manual/') 
+* [MongoDB](https://docs.mongodb.com/manual/) 
 * [Mongoose]('https://mongoosejs.com/docs/guide.html')
 * [Typescript]('https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html')
 
@@ -19,21 +19,6 @@ Using decorators located in key positions in a class (represent your mongoose sc
 
 * Generate class definition to a native mongoose schema.
 * Support OOP writing style by enabling schema class extending.
+* Support class method & static implementation and invoking them through a document and Model.
 * Reduce redundancies by inferring the property type (using reflection).
-* Cover created and fetched documents with the schema class definition.
-* // Todo : describe class method & static feature.
-
-<br>
-
-
-### Table Of Content :
-+ [Installation](#)
-+ [Usage](#)
-    + 
-+ API Reference
-    + [Schema Class Decorator](lib/mongo-ts/docs/class-decorator.md)
-    + [Class Members Decorators](lib/mongo-ts/docs/field-decorators.md)
-    + [Class Method and Static Decorators](lib/mongo-ts/docs/func-decorators.md)
-+ [Example Use Cases](#)
-
-
+* Cover created and fetched documents with the schema class type definition.

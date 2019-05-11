@@ -1,10 +1,12 @@
 
 # Schema Static / Class Method Decorator :
 
+**Overview** <br>
+Mongo-TS uses method decorators to reference and apply the decorated method (class method or static method) to the document and Model. <br>
+<br>
 
 
-
-`@Method()`
+### `@Method()`
 
 ***Description:*** <br>
 Decorator that define a class method as a schema method for any document to use. <br>
@@ -22,11 +24,17 @@ class User extends ExtendableMongooseDoc {
     } 
 }
 
-/* will mapped to  */
 
+const UserModel = toModel<User, typeof User>(User, 'users');
+
+UserModel.findById(id).then((user) => {
+    console.log(user.getFullName()); // will print the user full name 
+});
 ```
+<br>
 
-`@Static()`
+
+### `@Static()`
 
 ***Description:*** <br>
 Decorator that define a static method as a schema method for any model to use. <br>
@@ -42,7 +50,10 @@ class User extends ExtendableMongooseDoc {
         const _this = UserModel;
 
         const fieldsForSearch = ['first', 'last'];
-        const toPipeLine = ( (s: string) => fieldsForSearch.map(f => ({ [f]: { $regex: searchValue, $options: 'i' } })) );
+        const toPipeLine = ( 
+            (s: string) => 
+                fieldsForSearch.map(f => ({ [f]: { $regex: searchValue, $options: 'i' } })) 
+        );
         
         const searchResult = await _this.aggregate([ { 
             $or: [
@@ -68,7 +79,7 @@ UserModel.searchByName('bob').then((users) => {
     }
 });
 ```
-
+<br>
 
 ***Important !*** <br> 
 Document object that been 'leaned' will not be able to invoke any of his bounded class methods, altho, in compile time, the method under the document's type can be access. <br>
@@ -100,5 +111,4 @@ UserModel.findById(id).lean().then((user) => {
 <br>
 
 *Note:* <br>
-If `.lean()` was not chained before the `.then()` than the method `user.getEmailAccountProvider()` would have been called as expected.
-
+If `.lean()` was not chained before the `.then()` than the method `user.getEmailAccountProvider()` would have been called as expected. <br>
