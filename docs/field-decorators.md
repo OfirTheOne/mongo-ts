@@ -1,12 +1,12 @@
 
-# Class members Decorators :
+# Class members Decorators
 
-Mongo-TS uses field decorators to collect data regard the decorated class members, with that data the member's schema definition is created and mapped to relevant property on the generated schema.
+**Overview:** <br>
+Mongo-TS uses field decorators to collect data regard the decorated class members, with that data the member's schema definition is created and mapped to relevant property on the generated schema. <br>
+<br>
 
 
-## Api Reference :
-
-`@Prop(definition?: Partial<PropertyDefinition>)`
+### `@Prop(definition?: Partial<PropertyDefinition>)`
 
 ***Description:*** <br>
 Decorator that infer the type's constructor of the decorated property using reflection, mapped it as the `type` value of the property schema definition. <br>
@@ -34,7 +34,7 @@ User = {
 
 
 
-`@Ref(modelName: string, definition?: Partial<PropertyDefinition>)`
+### `@Ref(modelName: string, definition?: Partial<PropertyDefinition>)`
 
 ***Description:*** <br>
 Decorator that define a ref `type` property by a provided modal name. <br>
@@ -60,7 +60,7 @@ User = {
 
 
 
-`@ArrayRef(modelName: string, definition?: Partial<PropertyDefinition>)`
+### `@ArrayRef(modelName: string, definition?: Partial<PropertyDefinition>)`
 
 ***Description:*** <br>
 Decorator that define an array ref `type` property by a provided modal name. <br>
@@ -87,7 +87,7 @@ User = {
 
 
 
-`@ArrayOf()`
+### `@ArrayOf()`
 
 ***Description:*** <br>
 Decorator that get one of the string values `string` | `number` | `boolean` | `any` as a type indicator, or a constructor type function of a schema-class (decorated with `@TypedSchema`), and define an array of that type.<br>
@@ -115,7 +115,7 @@ User = {
 
 
 
-`@Enum(enumKeys: Array<string>, definition?: Partial<PropertyDefinition>)`
+### `@Enum(enumKeys: Array<string>, definition?: Partial<PropertyDefinition>)`
 
 ***Description:*** <br>
 Decorator that define an Enum type property by a provided enum keys array. <br>
@@ -167,7 +167,7 @@ Profile = {
 
 
 
-`@Property(type: any, definition?: Partial<PropertyDefinition>)`
+### `@Property(type: any, definition?: Partial<PropertyDefinition>)`
 
 ***Description:*** <br>
 Decorator that allows a free / custom definition of of the decorated property.<br>
@@ -205,60 +205,79 @@ User = {
 
 
 
-### Compositions
+### **Compositions**
 
-Decorator be nature can be compose on top of each other.<br>
+Decorators by nature can be compose on top of each other, with decorator that set a specific definition attribute it can make more sense to utilize that behaviors.<br> 
+An option for setting a class member's definition can be by composing specific-attribute decorators.<br>
+<br>
 
-`@Default()`
+### `@Default(value: boolean = true)`
 
 ***Description:*** <br>
-Decorator that set the default definition to it's provided value. <br>
+Decorator that set the `default` definition attribute to the provided value. <br>
 
 ***Example:*** <br>
 ```ts
+@TypedSchema()
+class User extends ExtendableMongooseDoc {  
+    @Prop() 
+    @Default(true)  
+        subscribed: boolean;
+}
 ```
 <br>
 
 
 
-`@Required()`
+### `@Required(value: (boolean | string) = true)`
 
 ***Description:*** <br>
-Decorator that set the required definition to it's provided value. <br>
+Decorator that set the `required` definition attribute to the provided value. <br>
 
 ***Example:*** <br>
 ```ts
+@TypedSchema()
+class User extends ExtendableMongooseDoc {   
+    @Prop() 
+    @Required()  
+        email: string;
+}
 ```
 <br>
 
 
 
-`@Unique()`
+### `@Unique(value: boolean = true)`
 
 ***Description:*** <br>
-Decorator that set the unique definition to it's provided value. <br>
+Decorator that set the `unique` definition attribute to the provided value. <br>
 
 ***Example:*** <br>
 ```ts
+@TypedSchema()
+class User extends ExtendableMongooseDoc {   
+    @Prop() 
+    @Unique()  
+        email: string;
+}
 ```
 <br>
 
 
-### Primitives (legacy)
+### `@Match(value: RegExp | string)`
 
+***Description:*** <br>
+Decorator that set the `match` definition attribute to the provided value. <br>
+
+***Example:*** <br>
 ```ts
-@String() 
+@TypedSchema()
+class User extends ExtendableMongooseDoc {
+    @Prop() 
+    @Match(/^[\w\.-]+@[\w-]+\.[\w\.-]+$/) 
+        email: string;
+}
 ```
-
-```ts
-@Number()
-```
-
-```ts
-@Boolean()
-```
-
-
 
 
 

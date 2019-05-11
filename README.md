@@ -19,41 +19,39 @@ Using decorators located in key positions in a class (represent your mongoose sc
 
 * Generate class definition to a native mongoose schema.
 * Support OOP writing style by enabling schema class extending.
+* Support class method & static implementation and invoking them through a document and Model.
 * Reduce redundancies by inferring the property type (using reflection).
-* Cover created and fetched documents with the schema class definition.
-* // Todo : describe class method & static feature.
+* Cover created and fetched documents with the schema class type definition.
 
 <br>
 
 
 ### Table Of Content :
-+ [Installation](#)
++ [Installation](#installation)
 + [API Reference](#api-reference)
     + [Schema Class Decorator](#schema-class-decorator)
     + [Schema Creation Hooks](#schema-creation-hooks)
     + [Class Members Decorators](#class-members-decorators)
     + [Class Method and Static Decorators](#class-static-and-class-method-decorators)
     + [Custom Default Schema Definition](#custom-default-schema-definition)
-
-* [Fallbacks](#fallbacks)
-+ [Example Use Cases](#)
++ [Fallbacks](#fallbacks)
 
 
 <br>
 <hr>
 <br>
 
-# Installation :
+# Installation
 ```sh
 npm i mongo-ts -S
 ```
 <br>
 
 
-# Api Reference :
+# Api Reference
 
 
-## **Schema Class Decorator :**
+## **Schema Class Decorator**
 
 **Overview:** <br>
 Every schema class must be decorate with `@TypedSchema`, with that, the 'native' schema definition can be provided and a schema class can extends from other schema class.<br>
@@ -151,7 +149,7 @@ An interface ...
 <br>
 <br>
 
-## **Schema Creation Hooks :**
+## **Schema Creation Hooks**
 
 **Overview:** <br>
 The process of generating a 'native' schema from schema-class, is divided to stages :
@@ -233,7 +231,7 @@ interface OnSchemaCached {
 <br>
 
 
-## **Class Members Decorators :**
+## **Class Members Decorators**
 
 **Overview:** <br>
 Mongo-TS uses field decorators to collect data regard the decorated class members, with that data the member's schema definition is created and mapped to relevant property on the generated schema. <br>
@@ -439,7 +437,7 @@ User = {
 
 
 
-### Compositions
+### **Compositions**
 
 Decorators by nature can be compose on top of each other, with decorator that set a specific definition attribute it can make more sense to utilize that behaviors.<br> 
 An option for setting a class member's definition can be by composing specific-attribute decorators.<br>
@@ -452,6 +450,12 @@ Decorator that set the `default` definition attribute to the provided value. <br
 
 ***Example:*** <br>
 ```ts
+@TypedSchema()
+class User extends ExtendableMongooseDoc {  
+    @Prop() 
+    @Default(true)  
+        subscribed: boolean;
+}
 ```
 <br>
 
@@ -464,6 +468,12 @@ Decorator that set the `required` definition attribute to the provided value. <b
 
 ***Example:*** <br>
 ```ts
+@TypedSchema()
+class User extends ExtendableMongooseDoc {   
+    @Prop() 
+    @Required()  
+        email: string;
+}
 ```
 <br>
 
@@ -476,6 +486,12 @@ Decorator that set the `unique` definition attribute to the provided value. <br>
 
 ***Example:*** <br>
 ```ts
+@TypedSchema()
+class User extends ExtendableMongooseDoc {   
+    @Prop() 
+    @Unique()  
+        email: string;
+}
 ```
 <br>
 
@@ -487,6 +503,12 @@ Decorator that set the `match` definition attribute to the provided value. <br>
 
 ***Example:*** <br>
 ```ts
+@TypedSchema()
+class User extends ExtendableMongooseDoc {
+    @Prop() 
+    @Match(/^[\w\.-]+@[\w-]+\.[\w\.-]+$/) 
+        email: string;
+}
 ```
 
 <br>
@@ -496,10 +518,10 @@ Decorator that set the `match` definition attribute to the provided value. <br>
 
 
 
-## **Class Static and Class Method Decorators :**
+## **Class Static and Class Method Decorators**
 
 **Overview** <br>
-dddddddd .. <br>
+Mongo-TS uses method decorators to reference and apply the decorated method (class method or static method) to the document and Model. <br>
 <br>
 
 
@@ -615,7 +637,7 @@ If `.lean()` was not chained before the `.then()` than the method `user.getEmail
 <br>
 
 
-## **Custom Default Schema Definition :**
+## **Custom Default Schema Definition**
 
 **Overview** <br>
 ... 
@@ -625,7 +647,7 @@ If `.lean()` was not chained before the `.then()` than the method `user.getEmail
 <br>
 
 
-# Fallbacks : 
+# Fallbacks
 
 This module works best with flat schemas (zero redundancies). <br>
 The solution for multilayered schema, is to cover each complex (let say, more then three members) layer with a class and use it in the parent layer.<br>
