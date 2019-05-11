@@ -1,5 +1,5 @@
 {
-  "name": "mongodb-ts",
+  "name": "ts-mongo",
   "version": "1.0.0",
   "description": "Mongoose wrapper for Typescript supports",
   "main": "dist/index.js",
