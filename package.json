@@ -1,6 +1,6 @@
 {
   "name": "mongo-ts-struct",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Mongoose wrapper for Typescript supports",
   "main": "dist/index.js",
   "os": [
