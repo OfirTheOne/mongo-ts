@@ -63,7 +63,7 @@ Class decorated with `@TypedSchema` supports multiple stages / hooks in the sche
 
 
 
-### `@TypedSchema(config?: TypedSchemaConfig)`
+#### `@TypedSchema(config?: TypedSchemaConfig)`
 
 ***Description:*** <br>
 
@@ -141,7 +141,7 @@ Admin = {
 
 
 
-### `interface TypedSchemaConfig`
+#### `interface TypedSchemaConfig`
 
 ***Description:*** <br>
 ::TODO:: <br>
@@ -152,7 +152,7 @@ Admin = {
 <br>
 
 
-### `toModel<>()`
+#### `toModel<M, T extends Ctor<M>>(TypedSchemeClass: T, modelName: string,preModelCreation: PreModelCreationFunc<T>)`
 
 ***Description:*** <br>
 ::TODO:: <br>
