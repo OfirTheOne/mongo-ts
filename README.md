@@ -1,8 +1,11 @@
 
-# Mongo-TS
+# Mongo-TS Struct
 
 ### About :
-Using decorators located in key positions in a class (represent your mongoose schema, only definitely typed), a 'native' mongoose schema is being build behind the scene, without you repetitively write your schema (once as an interface, class and then a mongoose schema) 
+Mongoose Documents, by default, are not covered by there schema type. <br>
+The common solution For type-cover Document object, is an interface for each schema, which lead to redundancy (define the schema once as a schema definition object and once as an interface) and may take more code maintenance. <br>
+
+By defining a class that represent your Mongoose schema, and using Typescript decorators around the class's members, your schema definitions are being stored behind the scene and a type-cover 'native' Mongoose schema is created.
 
 **Using mongo-ts your schema need to be written once as a class - and a typed cover schema will be created for you.**
 
@@ -10,8 +13,8 @@ Using decorators located in key positions in a class (represent your mongoose sc
 
 ### References :
 * [MongoDB](https://docs.mongodb.com/manual/) 
-* [Mongoose]('https://mongoosejs.com/docs/guide.html')
-* [Typescript]('https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html')
+* [Mongoose](https://mongoosejs.com/docs/guide.html)
+* [Typescript](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
 
 <br>
 
@@ -43,7 +46,7 @@ Using decorators located in key positions in a class (represent your mongoose sc
 
 # Installation
 ```sh
-npm i mongo-ts -S
+npm i mongo-ts-struct -S
 ```
 <br>
 
@@ -60,7 +63,7 @@ Class decorated with `@TypedSchema` supports multiple stages / hooks in the sche
 
 
 
-### `@TypedSchema(config?: TypedSchemaConfig)`
+#### `@TypedSchema(config?: TypedSchemaConfig)`
 
 ***Description:*** <br>
 
@@ -138,15 +141,29 @@ Admin = {
 
 
 
-### `interface TypedSchemaConfig`
+#### `interface TypedSchemaConfig`
 
 ***Description:*** <br>
-An interface ...
+::TODO:: <br>
 ***Definition:*** <br> 
 ```ts
-
+::TODO::
 ```
 <br>
+
+
+#### `toModel<M, T extends Ctor<M>>(TypedSchemeClass: T, modelName: string,preModelCreation: PreModelCreationFunc<T>)`
+
+***Description:*** <br>
+::TODO:: <br>
+***Definition:*** <br> 
+```ts
+::TODO::
+```
+<br>
+
+
+
 <br>
 
 ## **Schema Creation Hooks**
@@ -165,7 +182,7 @@ The process of generating a 'native' schema from schema-class, is divided to sta
 
 
 
-### `OnConstructDefinitions` 
+#### `OnConstructDefinitions` 
 
 ***Description:*** <br>
 An interface the schema-class can implement and apply the hook `onConstructDefinitions`.  <br>
@@ -181,7 +198,7 @@ interface OnConstructDefinitions {
 
 
 
-### `OnSchemaCreated` 
+#### `OnSchemaCreated` 
 
 ***Description:*** <br>
 An interface the schema-class can implement and apply the hook `onSchemaCreated`.  <br>
@@ -197,7 +214,7 @@ interface OnSchemaCreated {
 
 
 
-### `OnSchemaBound` 
+#### `OnSchemaBound` 
 
 ***Description:*** <br>
 An interface the schema-class can implement and apply the hook `onSchemaBound`.  <br>
@@ -213,7 +230,7 @@ interface OnSchemaBound {
 
 
 
-### `OnSchemaCached` 
+#### `OnSchemaCached` 
 
 ***Description:*** <br>
 An interface the schema-class can implement and apply the hook `onSchemaCached`.  <br>
@@ -238,7 +255,7 @@ Mongo-TS uses field decorators to collect data regard the decorated class member
 <br>
 
 
-### `@Prop(definition?: Partial<PropertyDefinition>)`
+#### `@Prop(definition?: Partial<PropertyDefinition>)`
 
 ***Description:*** <br>
 Decorator that infer the type's constructor of the decorated property using reflection, mapped it as the `type` value of the property schema definition. <br>
@@ -266,7 +283,7 @@ User = {
 
 
 
-### `@Ref(modelName: string, definition?: Partial<PropertyDefinition>)`
+#### `@Ref(modelName: string, definition?: Partial<PropertyDefinition>)`
 
 ***Description:*** <br>
 Decorator that define a ref `type` property by a provided modal name. <br>
@@ -292,7 +309,7 @@ User = {
 
 
 
-### `@ArrayRef(modelName: string, definition?: Partial<PropertyDefinition>)`
+#### `@ArrayRef(modelName: string, definition?: Partial<PropertyDefinition>)`
 
 ***Description:*** <br>
 Decorator that define an array ref `type` property by a provided modal name. <br>
@@ -319,10 +336,10 @@ User = {
 
 
 
-### `@ArrayOf()`
+#### `@ArrayOf(type: SupportedTypes | Function, definition: Partial<PropertyDefinition>)`
 
 ***Description:*** <br>
-Decorator that get one of the string values `string` | `number` | `boolean` | `any` as a type indicator, or a constructor type function of a schema-class (decorated with `@TypedSchema`), and define an array of that type.<br>
+Decorator that get `SupportedTypes` (one of the string values `string` | `number` | `boolean` | `any`) as a type indicator, or a constructor type function of a schema-class (decorated with `@TypedSchema`), and define an array of that type.<br>
 An array type field can be inferred using reflection but currently the type of that array can't be detect.<br>
 
 ***Example:*** <br>
@@ -347,11 +364,11 @@ User = {
 
 
 
-### `@Enum(enumKeys: Array<string>, definition?: Partial<PropertyDefinition>)`
+#### `@Enum(enumKeys: Array<string>, definition?: Partial<PropertyDefinition>)`
 
 ***Description:*** <br>
-Decorator that define an Enum type property by a provided enum keys array. <br>
-the property value can be the enum type or an array of that enum, the `Enum` will infer and map the property type accordingly.<br>
+Decorator that define an Enum type property by a provided enum keys array (an array of string). <br>
+The property type can be the enum type or an array of that enum, the `@Enum` will infer and map the property type accordingly.<br>
 
 ***Example:*** <br>
 ```ts
@@ -399,7 +416,7 @@ Profile = {
 
 
 
-### `@Property(type: any, definition?: Partial<PropertyDefinition>)`
+#### `@Property(type: any, definition?: Partial<PropertyDefinition>)`
 
 ***Description:*** <br>
 Decorator that allows a free / custom definition of of the decorated property.<br>
@@ -443,7 +460,7 @@ Decorators by nature can be compose on top of each other, with decorator that se
 An option for setting a class member's definition can be by composing specific-attribute decorators.<br>
 <br>
 
-### `@Default(value: boolean = true)`
+#### `@Default(value: boolean = true)`
 
 ***Description:*** <br>
 Decorator that set the `default` definition attribute to the provided value. <br>
@@ -461,7 +478,7 @@ class User extends ExtendableMongooseDoc {
 
 
 
-### `@Required(value: (boolean | string) = true)`
+#### `@Required(value: (boolean | string) = true)`
 
 ***Description:*** <br>
 Decorator that set the `required` definition attribute to the provided value. <br>
@@ -479,7 +496,7 @@ class User extends ExtendableMongooseDoc {
 
 
 
-### `@Unique(value: boolean = true)`
+#### `@Unique(value: boolean = true)`
 
 ***Description:*** <br>
 Decorator that set the `unique` definition attribute to the provided value. <br>
@@ -496,7 +513,7 @@ class User extends ExtendableMongooseDoc {
 <br>
 
 
-### `@Match(value: RegExp | string)`
+#### `@Match(value: RegExp | string)`
 
 ***Description:*** <br>
 Decorator that set the `match` definition attribute to the provided value. <br>
@@ -518,14 +535,14 @@ class User extends ExtendableMongooseDoc {
 
 
 
-## **Class Static and Class Method Decorators**
+## **Static & Class Method Decorators**
 
 **Overview** <br>
 Mongo-TS uses method decorators to reference and apply the decorated method (class method or static method) to the document and Model. <br>
 <br>
 
 
-### `@Method()`
+#### `@Method()`
 
 ***Description:*** <br>
 Decorator that define a class method as a schema method for any document to use. <br>
@@ -553,7 +570,7 @@ UserModel.findById(id).then((user) => {
 <br>
 
 
-### `@Static()`
+#### `@Static()`
 
 ***Description:*** <br>
 Decorator that define a static method as a schema method for any model to use. <br>
@@ -640,7 +657,7 @@ If `.lean()` was not chained before the `.then()` than the method `user.getEmail
 ## **Custom Default Schema Definition**
 
 **Overview** <br>
-... 
+::TODO:: <br>
 
 <br>
 <br>
