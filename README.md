@@ -31,6 +31,7 @@ By defining a class that represent your Mongoose schema, and using Typescript de
 
 ### Table Of Content :
 + [Installation](#installation)
++ [Quick Setup and Usage](#quick-setup-and-usage)
 + [API Reference](#api-reference)
     + [Schema Class Decorator](#schema-class-decorator)
     + [Schema Creation Hooks](#schema-creation-hooks)
@@ -50,6 +51,142 @@ npm i mongo-ts-struct -S
 ```
 <br>
 
+
+# Quick Setup and Usage
+
+1. Assuming you got an existing typescript node app, install the module with `npm i mongo-ts-struct -S`. <br>
+
+    Make sure the setting on your `tsconfig.json` file allowing decorators : <br>
+    ```js
+    {
+        "compilerOptions": {
+            "experimentalDecorators": true,
+            "emitDecoratorMetadata": true,
+            ...
+        }
+        ...
+    }
+    ```
+
+
+2. Moving on to the code, <br>
+    The common mongoose schema setup with typescript on the background is looking something like : <br>
+
+    ```ts
+
+    // on file - blog.interface.ts
+
+    export interface IBlog {
+            title:  string;
+            author: string,
+            body:   string,
+            comments: { body: string, date: Date }[], 
+            date: Date
+            hidden: boolean,
+            meta: {
+                votes: number,
+                favs:  number
+            }
+    }
+
+
+    // on file - blog.schema.ts
+
+    import * as mongoose from 'mongoose';
+    import { IBlog } from './blog.interface';
+
+    export const blogSchema = new mongoose.Schema<IBlog>({
+        title:  { 
+            type: String, 
+            required: true 
+        },
+        author: String,
+        body:   String,
+        comments: { 
+            type: [{ body: String, date: Date }], 
+            default: [] 
+        },
+        date: { type: Date, default: Date.now },
+        hidden: Boolean,
+        meta: {
+            votes: Number,
+            favs:  Number
+        }
+    });
+
+
+    // on file - blog.model.ts
+
+    import * as mongoose from 'mongoose';
+    import { blogSchema } from './blog.schema';
+
+    blogSchema.methods.recentComments = function(amount: number = 5) {
+        const blog = this;
+        return blog.comments.sort((a, b) => a - b > 0 ? 1 : -1 ).slice(0, amount);
+    }
+
+    export const Blog =  mongoose.Model('blogs', blogSchema);
+
+    ```
+    <br>
+
+    **The down falls on this approach :** <br>
+    * You got three files for a single schema, you can place it all in one file, but that might be consider a bad practice. <br>
+    * The redundancy and duplicate definition of your schema are very match noticeable.<br> 
+    Maintaining two definitions located in separate files in sync can cause some hide-of-sight bugs. <br>
+    * A method defined with `schema.methods` will not be type covered, meaning, the calling of the method will not be supported by typescript compiler.  <br>
+
+
+    This approach can be reduce now the following, while avoiding all the mentioned fall becks. <br>
+
+    ```ts
+    // on file - blog.ts  / a single file will suffice
+
+    import { TypedSchema, Prop, Property, ArrayOf, Method ,toModel } from 'mongo-ts-struct';
+
+    @TypedSchema() class BlogComments {
+        @Prop() body: string;
+        @Prop() date: Date;
+    }
+
+    @TypedSchema() class Blog extends ExtendableMongooseDoc {
+
+        @Prop({ required: true }) title: string;
+        @Prop() author: string;
+        @Prop() body: string;
+        // can use @Property instead of creating comments schema.
+        @ArrayOf(BlogComments, { default: [] }) comments: BlogComments[];  
+        @Prop({ default: Date.now }) date: Date;
+        @Prop() hidden: boolean;
+
+        @Property(votes: Number, favs:  Number}) 
+            meta: {
+                votes: number,
+                favs:  number
+            }
+
+        @Method() recentComments(amount: number = 5) {
+            return this.comments.sort((a, b) => a - b > 0 ? 1 : -1 ).slice(0, amount);
+        }
+    }
+
+    export const BlogModel = toModel<Blog, typeof Blog>(Blog, 'blogs');
+
+    ```
+
+3. The data queries are all remain the same, the returned documents are cover with the schema-class type, and the schema-class method can be invoked by the returned documents as well;
+
+    ```ts
+    async function getBlog(id: string): { blog: Blog, recentComments: Array<BlogComments> } {
+        const blogDoc = await BlogModel.findById(id); // blogDoc of Blog type
+        const recentComments = blog.recentComments(); // recentComments of BlogComments[] type 
+        return { blog: blogDoc, recentComments };
+    }
+    ```
+
+<br>
+<br>
+<br>
 
 # Api Reference
 
