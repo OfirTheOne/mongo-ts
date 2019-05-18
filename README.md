@@ -137,8 +137,9 @@ npm i mongo-ts-struct -S
     * A method defined with `schema.methods` will not be type covered, meaning, the calling of the method will not be supported by typescript compiler.  <br>
 
 
-    This approach can be reduce now the following, while avoiding all the mentioned fall becks. <br>
+    This approach can be reduce now to the following, while avoiding all the mentioned fall becks. <br>
 
+    The interface definition, mongoose-schema and schema-functions are all located under the same roof of a single class, just like the familiar OOP coding style.<br>
     ```ts
     // on file - blog.ts  / a single file will suffice
 
@@ -194,8 +195,9 @@ npm i mongo-ts-struct -S
 ## **Schema Class Decorator**
 
 **Overview:** <br>
-Every schema class must be decorate with `@TypedSchema`, with that, the 'native' schema definition can be provided and a schema class can extends from other schema class.<br>
-Class decorated with `@TypedSchema` supports multiple stages / hooks in the schema creation and mapping process, using those hooks you get you can freely change the schema definition as you please.<br>
+Every schema class must be decorate with `@TypedSchema`. 
+With that, the schema definitions can be collected (using field decorators) from the class, and the schema-class extending can be supported and work properly.<br>
+Class decorated with `@TypedSchema` supports multiple function-hooks (stages) in the schema creation, using those hooks you can make your custom changes the schema creation process as you please.<br>
 <br>
 
 
