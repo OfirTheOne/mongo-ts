@@ -1,0 +1,15 @@
+{
+    "MongoDB" : {
+        "Configurations" : {
+            "host" : "127.0.0.1",
+            "user" : "db_user",
+            "password" : "db_password",
+            "port" : "27017",
+            "database" : "epicure_db"
+        },
+        "currentVersion" : 1
+    },
+    "JWT_SECRET": "k1e2tigohx8etqhrt78htx3236o"
+
+
+}
