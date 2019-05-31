@@ -38,6 +38,9 @@ By defining a class that represent your Mongoose schema, and using Typescript de
     + [Class Members Decorators](#class-members-decorators)
     + [Class Method and Static Decorators](#class-static-and-class-method-decorators)
     + [Custom Default Schema Definition](#custom-default-schema-definition)
++ [Usage Patterns](#usage-patterns)
+    + [Schema Class Extension](#schema-class-extension)
+    + [Schema Class Composition](#schema-class-composition)
 + [Fallbacks](#fallbacks)
 
 
@@ -178,7 +181,7 @@ npm i mongo-ts-struct -S
 3. The data queries are all remain the same, the returned documents are cover with the schema-class type, and the schema-class method can be invoked by the returned documents as well;
 
     ```ts
-    async function getBlog(id: string): { blog: Blog, recentComments: Array<BlogComments> } {
+    async function getBlog(id: string): Promise<{ blog: Blog, recentComments: Array<BlogComments> }> {
         const blogDoc = await BlogModel.findById(id); // blogDoc of Blog type
         const recentComments = blog.recentComments(); // recentComments of BlogComments[] type 
         return { blog: blogDoc, recentComments };
@@ -291,13 +294,41 @@ Admin = {
 <br>
 
 
-#### `toModel<M, T extends Ctor<M>>(TypedSchemeClass: T, modelName: string,preModelCreation: PreModelCreationFunc<T>)`
+#### `toModel<M, T extends Ctor<M>>(class: T, modelName: string, transform: PreModelCreationFunc<T>)`
 
 ***Description:*** <br>
-::TODO:: <br>
-***Definition:*** <br> 
+Function that process your schema-class object to a type cover mongoose Model. <br>
+Querying documents using the `Model` created with `toModel<M, T extends Ctor<M>>` will return documents of type `M`, <br>
+where `M` will be the schema-class object. 
+
+***Usage:*** <br> 
 ```ts
-::TODO::
+import { ExtendableMongooseDoc, Method } from 'mongo-ts-struct'
+import { TypedSchema, toModel, Prop } from 'mongo-ts-struct'
+
+
+@TypedSchema({ options: { timestamps: true } })
+class User extends ExtendableMongooseDoc {
+    @Prop({ required: true, unique: true}) email: string;
+    @Prop() password: string;
+
+    @Method() getEmailAccountProvider() {
+        const email = this.email;
+        return email.replace(/.+\@(.+)\.[a-z]+$/, '$1');
+    }
+}
+
+const UserModel = toModel<User, typeof User>(User, 'users', (schema) => {
+    schema.set('toJSON', { 
+        transform: function (doc, ret, option) { 
+            return ret; 
+        }
+    });
+    schema.pre('save', /*  some password hashing action ...  */);
+});
+
+export { UserModel, User }
+
 ```
 <br>
 
@@ -401,22 +432,18 @@ Decorator that infer the type's constructor of the decorated property using refl
 
 ***Example:*** <br>
 ```ts
-class User ... {
-    @Prop({ required: true, unique: true, match: /[a-z0-9]+@[a-z]+\.[a-z]+/ })
-        email: string;
-    ...
-}
+@Prop({ required: true, unique: true, match: /[a-z0-9]+@[a-z]+\.[a-z]+/ })
+    email: string;
+
 /*  Will be mapped to :  */
 
-User = {
-    email: { 
-        type: Schema.Types.String,
-        required: true, 
-        unique: true, 
-        match: /[a-z0-9]+@[a-z]+\.[a-z]+/ 
-    }
-    ...
+email: { 
+    type: Schema.Types.String,
+    required: true, 
+    unique: true, 
+    match: /[a-z0-9]+@[a-z]+\.[a-z]+/ 
 }
+
 ```
 <br>
 
@@ -429,19 +456,14 @@ Decorator that define a ref `type` property by a provided modal name. <br>
 
 ***Example:*** <br>
 ```ts
-class User ... {
-    @Ref('territory'); 
-        territory: Territory | ObjectId; // assume 'Territory' in a defined type / class
-    ...
-}
+@Ref('territory'); 
+    territory: Territory | ObjectId; // assume 'Territory' in a defined type / class
+
 /*  Will be mapped to :  */
 
-User = {
-    territory: { 
-        ref: 'territory'
-        type: Schema.Types.ObjectId,
-    }
-    ...
+territory: { 
+    ref: 'territory'
+    type: Schema.Types.ObjectId,
 }
 ```
 <br>
@@ -455,20 +477,14 @@ Decorator that define an array ref `type` property by a provided modal name. <br
 
 ***Example:*** <br>
 ```ts
-class User ... {
-    @ArrayRef('post', { default: [] }); 
-        posts: Post[] | ObjectId[]; // assume 'Post' in a defined type / class
-    ...
-}
+@ArrayRef('post', { default: [] }); 
+    posts: Post[] | ObjectId[]; // assume 'Post' in a defined type / class
 
 /*  Will be mapped to :  */
 
-User = {
-    posts: {
-        type: [{ ref: 'post' type: Schema.Types.ObjectId }],
-        default: []
-    }
-    ...
+posts: {
+    type: [{ ref: 'post' type: Schema.Types.ObjectId }],
+    default: []
 }
 ```
 <br>
@@ -483,21 +499,16 @@ An array type field can be inferred using reflection but currently the type of t
 
 ***Example:*** <br>
 ```ts
-class User ... {
-    @ArrayOf('string', { default: [] }); 
-        tokens: string[],
-    ...
-}
+@ArrayOf('string', { default: [] }); 
+    tokens: string[],
 
 /*  Will be mapped to :  */
 
-User = {
-    tokens: {
-        type: [Schema.Types.String],
-        default: []
-    }
-    ...
+tokens: {
+    type: [Schema.Types.String],
+    default: []
 }
+
 ```
 <br>
 
@@ -512,44 +523,34 @@ The property type can be the enum type or an array of that enum, the `@Enum` wil
 ***Example:*** <br>
 ```ts
 // helper, take enum type and return his keys as an array.
-const enumKeys = (eType => (Object.values(eType).filter(e => typeof e == 'string')));
+const enumKeys = (eType => Object.values(eType));
+enum Permission { DELETE = 'delete' , update = 'update', INSERT = 'insert' }
 
-enum Permission { 'delete' ,'update', 'insert' }
-
-class User ... {
-    @Enum(enumKeys(Permission), { default: ['insert'] }); 
-        permissions: Permission[];
-    ...
-}
+@Enum(enumKeys(Permission), { default: [Permission.INSERT] }); 
+    permissions: Permission[];
 
 /*  Will be mapped to :  */
-User = {
-    permissions: {
-        type: [Schema.Types.String],
-        enum: ['delete' ,'update', 'insert'],
-        default: ['insert']
-    }
-    ...
+
+permissions: {
+    type: [Schema.Types.String],
+    enum: ['delete' ,'update', 'insert'],
+    default: ['insert']
 }
 
 
 enum Gender { 'female' ,'male', 'other' }
 
-class Profile ... {
-    @Enum(enumKeys(Gender), { required: true }); 
-        gender: Gender;
-    ...
-}
+@Enum(enumKeys(Gender), { required: true }); 
+    gender: Gender;
 
 /*  Will be mapped to :  */
-Profile = {
-    gender: {
-        type: Schema.Types.String,
-        enum: ['female' ,'male', 'other'],
-        required: true
-    }
-    ...
+
+gender: {
+    type: Schema.Types.String,
+    enum: ['female' ,'male', 'other'],
+    required: true
 }
+
 ```
 <br>
 
@@ -565,28 +566,19 @@ In must cases the `@Property` decorator will be used, a duplication of the field
 
 ***Example:*** <br>
 ```ts
-@TypedSchema()
-class User extends ExtendableMongooseDoc {
-    @Prop({ required: true }) username: string;
-    @Property({ firstName: String; lastName: String; address: String; age: Number; img: String; }) 
+@Property({ firstName: String; lastName: String; address: String; age: Number; img: String; }) 
     profile: { firstName: string; lastName: string; address: string; age: number; img: string; }
-}
+
 
 /*  Will be mapped to :  */
-User = {
-    username: {
-        type: String,
-    },
-    profile: 
-        type: {
-            firstName: String, 
-            lastName: String, 
-            address: String,
-            age: Number, 
-            img: String
-        }
+profile: {
+    type: {
+        firstName: String, 
+        lastName: String, 
+        address: String,
+        age: Number, 
+        img: String
     }
-    ...
 }
 ```
 <br>
@@ -623,13 +615,11 @@ class User extends ExtendableMongooseDoc {
 Decorator that set the `required` definition attribute to the provided value. <br>
 
 ***Example:*** <br>
-```ts
-@TypedSchema()
-class User extends ExtendableMongooseDoc {   
-    @Prop() 
-    @Required()  
-        email: string;
-}
+```ts 
+@Prop() 
+@Required()  
+    email: string;
+
 ```
 <br>
 
@@ -642,12 +632,11 @@ Decorator that set the `unique` definition attribute to the provided value. <br>
 
 ***Example:*** <br>
 ```ts
-@TypedSchema()
-class User extends ExtendableMongooseDoc {   
-    @Prop() 
-    @Unique()  
-        email: string;
-}
+
+@Prop() 
+@Unique()  
+    email: string;
+
 ```
 <br>
 
@@ -659,12 +648,11 @@ Decorator that set the `match` definition attribute to the provided value. <br>
 
 ***Example:*** <br>
 ```ts
-@TypedSchema()
-class User extends ExtendableMongooseDoc {
+
     @Prop() 
     @Match(/^[\w\.-]+@[\w-]+\.[\w\.-]+$/) 
         email: string;
-}
+
 ```
 
 <br>
@@ -786,7 +774,7 @@ UserModel.findById(id).lean().then((user) => {
 <br>
 
 *Note:* <br>
-If `.lean()` was not chained before the `.then()` than the method `user.getEmailAccountProvider()` would have been called as expected. <br>
+If `.lean()` was not chained before the `.then()`, then the method `user.getEmailAccountProvider()` would have been called as expected. <br>
 
 <br>
 <br>
@@ -801,6 +789,30 @@ If `.lean()` was not chained before the `.then()` than the method `user.getEmail
 <br>
 <br>
 <br>
+
+
+
+# Usage Patterns
+
+## Schema Class Extension
+
+```ts
+
+```
+<br>
+<br>
+<br>
+
+
+## Schema Class Composition
+
+```ts
+
+```
+<br>
+<br>
+<br>
+
 
 
 # Fallbacks
