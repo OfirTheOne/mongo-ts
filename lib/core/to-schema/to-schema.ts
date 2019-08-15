@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose'
 import { MetadataAgent } from "../../helpers";
-import { ExtendableMongooseDoc } from "./../extendable-mongoose-doc";
+// import { ExtendableMongooseDoc } from "./../extendable-mongoose-doc";
 import { Ctor, TypedSchemaConfig } from "../../models/internal";
 import { TypedSchemaDecoratorMissingError, EmptyTypedSchemaClassError } from "../../errors";
 
@@ -9,7 +9,7 @@ type SchemaFunctions<T> = {
     statics?: { [key in keyof  T]: Function } 
 }
 
-export function toSchema<T extends Ctor<M>, M extends mongoose.Document>(TypedSchemaClass: T):  mongoose.Schema<T> {
+export function toSchema(TypedSchemaClass: Ctor<any>):  mongoose.Schema {
     
     const $metadata = MetadataAgent.getMeta(TypedSchemaClass);
 
@@ -43,7 +43,7 @@ export function toSchema<T extends Ctor<M>, M extends mongoose.Document>(TypedSc
     }
 
     // create the mongoose scheme object.
-    const schema = new mongoose.Schema<T>(schemaDefinitions, config);
+    const schema = new mongoose.Schema(schemaDefinitions, config);
 
     // -- hook 02
     /**  OnSchemaCreated Stage **/

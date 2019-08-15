@@ -7,6 +7,6 @@ export namespace MongoTS {
 }
 
 export * from './core';
-export { ExtendableMongooseDoc } from './core/extendable-mongoose-doc';
+// export { ExtendableMongooseDoc } from './core/extendable-mongoose-doc';
 export * from './models/external';
 // export { SlimeSchema } from './models/external'
