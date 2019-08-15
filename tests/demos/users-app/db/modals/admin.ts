@@ -1,10 +1,11 @@
-import { TypedSchema, ExtendableMongooseDoc, Prop, Method, Enum, toModel, OnConstructDefinitions } from './../../../../../lib/core'
+import { TypedSchema, Prop, Method, Enum, toModel, OnConstructDefinitions } from './../../../../../lib/core'
 import { Profile } from './profile';
+import { AsDocument } from './../../../../../lib/models/utils';
 
 const USER_CAPABILITIES = ['UPDATE', 'DELETE', 'UPDATE_DELETE'];
 
 @TypedSchema()
-class BaseUser extends ExtendableMongooseDoc {
+class BaseUser {
 
     @Prop({ required: true }) name: string;
     @Prop({ unique: true, required: true }) email: string;
@@ -27,9 +28,10 @@ class Admin extends BaseUser implements OnConstructDefinitions {
     }
 }
 
+type AdminDocument = AsDocument<Admin>;
 
 const AdminModel = toModel<Admin, typeof Admin>(Admin, 'admin', (schema) => {
-    schema.pre<Admin>('save', function (next, doc) { 
+    schema.pre<AdminDocument>('save', function (next, doc) { 
         
         next();
     })

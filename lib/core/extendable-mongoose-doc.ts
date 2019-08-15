@@ -1,3 +1,4 @@
+/*
 import * as mongoose from 'mongoose';
 
 
@@ -188,3 +189,4 @@ export class ExtendableMongooseDoc implements mongoose.Document {
 
 
 }
+*/

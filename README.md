@@ -149,7 +149,7 @@ npm i mongo-ts-struct -S
         @Prop() date: Date;
     }
 
-    @TypedSchema() class Blog extends ExtendableMongooseDoc {
+    @TypedSchema() class Blog {
 
         @Prop({ required: true }) title: string;
         @Prop() author: string;
@@ -208,7 +208,7 @@ Class decorated with `@TypedSchema` supports multiple stages / hooks in the sche
 ```ts
 
 @TypedSchema()
-class Profile extends ExtendableMongooseDoc {
+class Profile {
     @Prop() firstName: string;
     @Prop() lastName: string;
     @Prop() address: string;
@@ -217,7 +217,7 @@ class Profile extends ExtendableMongooseDoc {
 }
 
 @TypedSchema({ options: { timestamps: true } })
-class User extends ExtendableMongooseDoc {
+class User {
     @Prop({ required: true }) username: string;
     @Prop({ unique: true, required: true }) email: string;
     @Prop() profile: Profile;
@@ -564,7 +564,7 @@ In must cases the `@Property` decorator will be used, a duplication of the field
 ***Example:*** <br>
 ```ts
 @TypedSchema()
-class User extends ExtendableMongooseDoc {
+class User {
     @Prop({ required: true }) username: string;
     @Property({ firstName: String; lastName: String; address: String; age: Number; img: String; }) 
     profile: { firstName: string; lastName: string; address: string; age: number; img: string; }
@@ -605,7 +605,7 @@ Decorator that set the `default` definition attribute to the provided value. <br
 ***Example:*** <br>
 ```ts
 @TypedSchema()
-class User extends ExtendableMongooseDoc {  
+class User {  
     @Prop() 
     @Default(true)  
         subscribed: boolean;
@@ -623,7 +623,7 @@ Decorator that set the `required` definition attribute to the provided value. <b
 ***Example:*** <br>
 ```ts
 @TypedSchema()
-class User extends ExtendableMongooseDoc {   
+class User {   
     @Prop() 
     @Required()  
         email: string;
@@ -641,7 +641,7 @@ Decorator that set the `unique` definition attribute to the provided value. <br>
 ***Example:*** <br>
 ```ts
 @TypedSchema()
-class User extends ExtendableMongooseDoc {   
+class User {   
     @Prop() 
     @Unique()  
         email: string;
@@ -658,7 +658,7 @@ Decorator that set the `match` definition attribute to the provided value. <br>
 ***Example:*** <br>
 ```ts
 @TypedSchema()
-class User extends ExtendableMongooseDoc {
+class User {
     @Prop() 
     @Match(/^[\w\.-]+@[\w-]+\.[\w\.-]+$/) 
         email: string;
@@ -687,7 +687,7 @@ Decorator that define a class method as a schema method for any document to use.
 ***Example:*** <br>
 ```ts
 @TypedSchema({ options: { timestamps: true } })
-class User extends ExtendableMongooseDoc {
+class User {
     @Prop({ required: true }) first: string;
     @Prop({ required: true }) last: string;
 
@@ -715,7 +715,7 @@ Decorator that define a static method as a schema method for any model to use. <
 ***Example:*** <br>
 ```ts
 @TypedSchema({ options: { timestamps: true } })
-class User extends ExtendableMongooseDoc {
+class User {
     @Prop({ required: true }) first: string;
     @Prop({ required: true }) last: string;
 
@@ -758,10 +758,10 @@ UserModel.searchByName('bob').then((users) => {
 Document object that been 'leaned' will not be able to invoke any of his bounded class methods, altho, in compile time, the method under the document's type can be access. <br>
 
 ```ts
-import { TypedSchema, Prop, Method, ExtendableMongooseDoc, toModel } from 'mongo-ts';
+import { TypedSchema, Prop, Method, toModel } from 'mongo-ts';
 
 @TypedSchema({ options: { timestamps: true } })
-class User extends ExtendableMongooseDoc {
+class User {
     @Prop({ required: true }) username: string;
     @Prop({ unique: true, required: true }) email: string;
 
@@ -811,7 +811,7 @@ E.g, you could write your class like :
 
 ```ts
 @TypedSchema()
-class BaseUser extends ExtendableMongooseDoc {
+class BaseUser {
     @Prop({ required: true }) name: string;
     @Prop({ unique: true, required: true }) email: string;
     @Prop() hash: string;
@@ -830,7 +830,7 @@ So by separating this class in to two layers, you can elegantly write it like :
 ```ts
 
 @TypedSchema()
-class Profile extends ExtendableMongooseDoc {
+class Profile {
     @Prop() firstName: string;
     @Prop() lastName: string;
     @Prop() address: string;
@@ -840,7 +840,7 @@ class Profile extends ExtendableMongooseDoc {
 
 
 @TypedSchema()
-class BaseUser extends ExtendableMongooseDoc {
+class BaseUser {
     @Prop({ required: true }) name: string;
     @Prop({ unique: true, required: true }) email: string;
     @Prop() profile: Profile;

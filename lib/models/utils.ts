@@ -1,3 +1,4 @@
+import * as mongoose from 'mongoose'
 
 export type SubType<Base, Condition> = 
 Pick<Base, { [Key in keyof Base]: Base[Key] extends Condition ? Key : never }[keyof Base]>;
@@ -12,6 +13,8 @@ export type ExtractProperty<T> = ExcludeSubType<T, ((_: any)=>any)>;
 
 export type Ctor<T = any> = new(...args:any[]) => T;
 
+
+export type AsDocument<T> = T & mongoose.Document;
 
 /*
 // Usage: 

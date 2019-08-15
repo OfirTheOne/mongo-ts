@@ -1,11 +1,13 @@
 import { expect } from 'chai';
-import { ExtendableMongooseDoc } from '../../../lib/' 
+// import { ExtendableMongooseDoc } from '../../../lib/' 
 import { Method, Prop, TypedSchema, Enum, toSchema, OnConstructDefinitions } from '../../../lib/core'
+import { Ctor } from 'lib/models/utils';
+import * as mongoose from 'mongoose';
 
 const USER_CAPABILITIES = ['UPDATE', 'DELETE', 'UPDATE_DELETE'];
 
 @TypedSchema()
-class BaseUser extends ExtendableMongooseDoc {
+class BaseUser {
     @Prop() name: string;
     @Prop() email: string;
     @Prop() img: string;
@@ -38,9 +40,12 @@ class Admin extends BaseUser implements OnConstructDefinitions {
 
 }
 
+export type AdminDocument = Admin & mongoose.Document;
+
 
 describe('toSchema function', function() {
     it('schema definitions extend the base class schema definitions.', function() {
-        const AdminSchema = toSchema<typeof Admin, Admin>(Admin);
+
+        const AdminSchema = toSchema(Admin);
     })
 })
