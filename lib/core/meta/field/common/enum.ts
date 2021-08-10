@@ -11,10 +11,11 @@ export function Enum(enumKeys: Array<string>, definition: Partial<PropertyDefini
         (targetPrototype: Object, propertyName: string) => {
             let type: any = InferType(targetPrototype, propertyName)
             type = (type && type.name == 'Array') ? [Schema.Types.String] : Schema.Types.String;
+            Object.assign(definition, { enum: enumKeys })
 
             return {
                 type,
-                definition:  { enum: enumKeys, }
+                definition
             }
         }
     );
